@@ -22,8 +22,8 @@
 			<c:remove var="errorMessage" scope="session"/>
 	</c:if>
 	<form action="login" method="post"><br />
-		<label for="loginId">ログインID</label>
-		<input name="loginId" id="loginId" /><br />
+		<label for="login_id">ログインID</label>
+		<input name="login_id" id="login_id" /><br />
 
 		<label for="password">パスワード</label>
 		<input name="password" type="password" id="password" /><br />

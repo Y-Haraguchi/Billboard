@@ -30,18 +30,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		//loginIdとパスワードをget
-		String loginId = request.getParameter("loginId");
+		//login_idとパスワードをget
+		String login_id = request.getParameter("login_id");
 		String password = request.getParameter("password");
 
 		LoginService loginService = new LoginService();
-		User user = loginService.login(loginId, password);
+		User user = loginService.login(login_id, password);
 
 		HttpSession session = request.getSession();
 
 		if(user != null) {
 			session.setAttribute("loginUser", user);
-			response.sendRedirect("home");
+			response.sendRedirect("home.jsp");
 		} else {
 			List<String> messages = new ArrayList<String>();
 			messages.add("ログインに失敗しました");

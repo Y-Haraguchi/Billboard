@@ -16,7 +16,7 @@ import billboard.exception.SQLRuntimeException;
 
 
 public class UserDao {
-	public User getUser(Connection connection, String loginId, String password) {
+	public User getUser(Connection connection, String login_id, String password) {
 
 		PreparedStatement ps = null;
 		try {
@@ -24,8 +24,7 @@ public class UserDao {
 			String sql = "SELECT * FROM billboard.users WHERE login_id = ? AND password = ?";
 
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, loginId);
-			System.out.println(ps);
+			ps.setString(1, login_id);
 			ps.setString(2, password);
 
 			//SQLの実行
@@ -59,7 +58,7 @@ public class UserDao {
 		try {
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String loginId = rs.getString("loginId");
+				String loginId = rs.getString("login_id");
 				String password = rs.getString("password");
 				String name = rs.getString("name");
 				int branchId = rs.getInt("branch_id");
@@ -68,7 +67,6 @@ public class UserDao {
 				Timestamp insertDate = rs.getTimestamp("insert_date");
 				Timestamp updateDate = rs.getTimestamp("update_date");
 
-				//setterでゲットしたデータをset
 				User user = new User();
 				user.setId(id);
 				user.setLoginId(loginId);

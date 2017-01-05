@@ -11,7 +11,7 @@ import billboard.utils.CipherUtil;
 
 public class LoginService {
 
-	public User login(String loginId, String password) {
+	public User login(String login_id, String password) {
 
 		Connection connection = null;
 		try {
@@ -20,7 +20,7 @@ public class LoginService {
 			//パスワードの暗号化
 			UserDao userDao = new UserDao();
 			String encPassword = CipherUtil.encrypt(password);
-			User user = userDao.getUser(connection, loginId, encPassword);
+			User user = userDao.getUser(connection, login_id, encPassword);
 
 			commit(connection);
 			return user;
