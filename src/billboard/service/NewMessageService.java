@@ -4,13 +4,16 @@ import static billboard.utils.CloseableUtil.*;
 import static billboard.utils.DBUtil.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import billboard.beans.Message;
+import billboard.beans.UserMessage;
 import billboard.dao.MessageDao;
+import billboard.dao.UserMessageDao;
 
 public class NewMessageService {
 
-//	private static final int LIMIT_NUM = 1000;
+	private static final int LIMIT_NUM = 1000;
 
 	public void register(Message message) {
 
@@ -33,7 +36,7 @@ public class NewMessageService {
 			close(connection);
 		}
 	}
-	/*public List<UserMessage> getMessage(Integer user_id) {
+	public List<UserMessage> getMessage(Integer user_id) {
 
 		Connection connection = null;
 		try {
@@ -56,6 +59,6 @@ public class NewMessageService {
 			close(connection);
 		}
 
-	}*/
+	}
 
 }

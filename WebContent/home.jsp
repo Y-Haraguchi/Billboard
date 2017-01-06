@@ -34,16 +34,29 @@
 			</div>
 			<c:remove var="errorMessages" scope="session"/>
 		</c:if> --%>
-		<div class="comments-area">
+
+	</div>
+	<div class="messages">
+		<c:forEach items="${messages}" var="message">
+			<hr size="10" color="#0000ff" noshade><br />
+			タイトル：<c:out value="${message.title}"/><br />
+			投稿者：<c:out value="${message.name}"/><br />
+			投稿日時：<fmt:formatDate value="${message.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" /><br />
+			投稿内容：<br />
+			<c:out value="${message.body}"/><br />
+			<hr><br />
+			<div class="comments-area">
 			<%-- <c:if test="${ not empty loginUser }"> --%>
-				<form action="newComment" method="post">
-					記事選択<br />
-					<textarea name="comment" cols="100" rows="5" class="comment-box"></textarea>
+				<form action="home" method="post">
+					<textarea name="comment" cols="50" rows="5" class="comment-box"></textarea>
 					<br />
-					<input type="submit" value="投稿">(500文字まで)
+					<input type="submit" value="コメント投稿">(500文字まで)
 				</form>
 			<%-- </c:if> --%>
-		</div>
+			</div>
+			<hr size="10" color="#0000ff" noshade><br />
+		</c:forEach>
+
 	</div>
 
 </body>

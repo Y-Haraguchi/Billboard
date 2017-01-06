@@ -40,7 +40,7 @@ public class NewMessageServlet extends HttpServlet {
 		message.setUser_id(user.getId());
 
 		new NewMessageService().register(message);
-		response.sendRedirect("home.jsp");
+		response.sendRedirect("home");
 
 	}
 
