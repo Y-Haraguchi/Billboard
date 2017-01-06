@@ -25,13 +25,12 @@ public class MessageDao {
 			sql.append(", update_date");
 			sql.append(", user_id");
 			sql.append(") VALUES (");
-			sql.append("?");
-			sql.append(", ?");
-			sql.append(", ?"); 					// user_id
-			sql.append(", ?"); 					// text
+			sql.append("?");					//category
+			sql.append(", ?");					//title
+			sql.append(", ?"); 					//body
 			sql.append(", CURRENT_TIMESTAMP");	// insert_date
 			sql.append(", CURRENT_TIMESTAMP");	// update_date
-			sql.append(", ?");
+			sql.append(", ?");					//user_id
 			sql.append(")");
 
 			ps = connection.prepareStatement(sql.toString());
@@ -39,7 +38,7 @@ public class MessageDao {
 			ps.setString(1, message.getCategory());
 			ps.setString(2, message.getTitle());
 			ps.setString(3, message.getBody());
-			ps.setInt(6, message.getUser_id());
+			ps.setInt(4, message.getUser_id());
 
 			ps.executeUpdate();
 

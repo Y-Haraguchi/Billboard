@@ -16,7 +16,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException  {
 
-//		response.sendRedirect("newMessage.jsp");
+
 
 	}
 
@@ -24,7 +24,6 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException  {
 
-//		response.sendRedirect("newMessage");
 
 	}
 

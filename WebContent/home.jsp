@@ -13,11 +13,11 @@
 <h2>ホーム画面</h2>
 	<div class="header">
 			ユーザー：<c:out value="${user.name}"/><br />
-		<%-- <c:if test="${ not empty loginUser }"> --%>
+		<c:if test="${ not empty loginUser }">
 			<a href="newMessage" >新規投稿</a>
 			<a href="" >ユーザー管理</a>
 			<a href="" >ログアウト</a>
-		<%-- </c:if> --%><br />
+		</c:if><br />
 
 		<div class="category_area">
 			カテゴリー ： <input name="category" id="category">
