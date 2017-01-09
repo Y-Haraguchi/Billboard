@@ -49,7 +49,7 @@ public class NewMessageService {
 
 			return ret;
 
-		} catch (RuntimeException e) {
+		} catch(RuntimeException e) {
 			rollback(connection);
 			throw e;
 		} catch (Error e) {

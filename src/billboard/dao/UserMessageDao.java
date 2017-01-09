@@ -46,17 +46,18 @@ public class UserMessageDao {
 		List<UserMessage> ret = new ArrayList<UserMessage>();
 		try {
 			while(rs.next()) {
-				UserMessage message = new UserMessage();
-				message.setId(rs.getInt("id"));
-				message.setName(rs.getString("name"));
-				message.setTitle(rs.getString("title"));
-				message.setCategory(rs.getString("category"));
-				message.setBody(rs.getString("body"));
-				message.setInsertDate(rs.getTimestamp("insert_date"));
-				message.setUpdateDate(rs.getTimestamp("update_date"));
-				message.setUser_id(rs.getInt("user_id"));
+				UserMessage userMessage = new UserMessage();
+				userMessage.setMessage_id(rs.getInt("messages_id"));
+				userMessage.setId(rs.getInt("id"));
+				userMessage.setName(rs.getString("name"));
+				userMessage.setTitle(rs.getString("title"));
+				userMessage.setCategory(rs.getString("category"));
+				userMessage.setBody(rs.getString("body"));
+				userMessage.setInsertDate(rs.getTimestamp("insert_date"));
+				userMessage.setUpdateDate(rs.getTimestamp("update_date"));
+				userMessage.setUser_id(rs.getInt("user_id"));
 
-				ret.add(message);
+				ret.add(userMessage);
 			}
 			return ret;
 		} finally {

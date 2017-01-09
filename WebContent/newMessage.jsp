@@ -13,18 +13,12 @@
 <h2>新規投稿画面</h2>
 <div class="main_contents">
 	<form action="newMessage" method="post">
-		<div class="category">
-			カテゴリー ： <input name="category" id="category">
-		</div><br />
-		<div class="messageTitle">
-			タイトル ： <input name="messageTitle" id="messageTitle">
-		</div><br />
-		<div class="messageBody">
-			本文<br />
-			<textarea name="messageBody" cols="75" rows="25" class="messageBody"></textarea>
-			<br />
-			<input type="submit" value="投稿">(1000文字まで)
-		</div>
+		カテゴリー ： <input name="category" id="category"><br />
+		タイトル ： <input name="messageTitle" id="messageTitle"><br />
+		本文<br />
+		<textarea name="messageBody" cols="75" rows="25" class="messageBody"></textarea>
+		<br />
+		<input type="submit" value="投稿">(1000文字まで)
 	</form>
 </div>
 

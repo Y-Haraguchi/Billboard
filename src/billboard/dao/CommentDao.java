@@ -6,39 +6,36 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import billboard.beans.Message;
+import billboard.beans.Comment;
 import billboard.exception.SQLRuntimeException;
 
-public class MessageDao {
+public class CommentDao {
 
-	public void insert(Connection connection, Message message) {
+	public void insert(Connection connection, Comment comment) {
 
 		PreparedStatement ps = null;
 		try {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO billboard.messages ( ");
-			sql.append("category");
-			sql.append(", title");
+			sql.append("INSERT INTO billboard.comments (");
+			sql.append("id");
 			sql.append(", body");
 			sql.append(", insert_date");
 			sql.append(", update_date");
 			sql.append(", user_id");
 			sql.append(") VALUES (");
-			sql.append("?");					//category
-			sql.append(", ?");					//title
-			sql.append(", ?"); 					//body
-			sql.append(", CURRENT_TIMESTAMP");	// insert_date
-			sql.append(", CURRENT_TIMESTAMP");	// update_date
-			sql.append(", ?");					//user_id
+			sql.append("?");
+			sql.append(", ?");
+			sql.append(", CURRENT_TIMESTAMP");
+			sql.append(", CURRENT_TIMESTAMP");
+			sql.append(", ?");
 			sql.append(")");
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, message.getCategory());
-			ps.setString(2, message.getTitle());
-			ps.setString(3, message.getBody());
-			ps.setInt(4, message.getUser_id());
+			ps.setInt(1, comment.getId());
+			ps.setString(2, comment.getBody());
+			ps.setInt(3, comment.getUser_id());
 
 			ps.executeUpdate();
 
@@ -47,6 +44,7 @@ public class MessageDao {
 		} finally {
 			close(ps);
 		}
+
 
 	}
 
