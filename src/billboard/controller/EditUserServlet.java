@@ -35,4 +35,17 @@ public class EditUserServlet extends HttpServlet {
 		request.getRequestDispatcher("/editUser.jsp").forward(request, response);
 	}
 
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		User updateUser = new User();
+		updateUser.setLoginId(request.getParameter("login_id"));
+		updateUser.setPassword(request.getParameter("password"));
+		updateUser.setName(request.getParameter("name"));
+		updateUser.setBranchId(Integer.parseInt(request.getParameter("branch_id")));
+		updateUser.setAssignTypeId(Integer.parseInt(request.getParameter("assign_type_id")));
+
+
+	}
+
 }

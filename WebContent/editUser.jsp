@@ -13,13 +13,13 @@
 <div class="editUser">
 	<form action="editUser" method=post>
 		<label for="login_id">ログインID</label>
-		<input name="login_id" value="${userLoginId}" id="login_id" />
+		<input name="login_id" value="${editUser.getLoginId()}" id="login_id" />
 		<br />
 		<label for="password">変更パスワード</label>
-		<input name="password" value="${editUser.password}" type="password" id="password" />
+		<input name="password" type="password" id="password" />
 		<br />
 		<label for="checkpassword">確認パスワード</label>
-		<input name="checkpassword" value="${editUser.password}" type="password" id="checkpassword" />
+		<input name="checkpassword" type="password" id="checkpassword" />
 		<br />
 		<label for="name">名前</label>
 		<input name="name" value="${editUser.name}" id="name" />
@@ -36,7 +36,7 @@
 			</c:forEach>
 		</select>
 		<br />
-
+		<input type="submit" value="変更する">
 	</form>
 </div>
 

@@ -39,7 +39,6 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 //		String password = request.getParameter("password");
 //		String checkPassword = request.getParameter("checkPassword");
-		System.out.println(request.getParameter("branch_id"));
 		int branch_id = Integer.parseInt(request.getParameter("branch_id"));
 		int assign_type_id = Integer.parseInt(request.getParameter("assign_type_id"));
 		//仮判定→後にヴァリデーションを挿入
