@@ -42,10 +42,10 @@ public class SignUpServlet extends HttpServlet {
 		System.out.println(request.getParameter("branch_id"));
 		int branch_id = Integer.parseInt(request.getParameter("branch_id"));
 		int assign_type_id = Integer.parseInt(request.getParameter("assign_type_id"));
-//		//仮判定→後にヴァリデーションを挿入
-//		if(password != checkPassword) {
-//			response.sendRedirect("signup");
-//		}
+		//仮判定→後にヴァリデーションを挿入
+/*		if(password != checkPassword) {
+			response.sendRedirect("signup");
+		}*/
 		User user = new User();
 		user.setLoginId(request.getParameter("login_id"));
 		user.setName(request.getParameter("name"));

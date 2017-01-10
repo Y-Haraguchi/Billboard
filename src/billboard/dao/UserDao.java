@@ -97,7 +97,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM billboard.user WHERE id = ?";
+			String sql = "SELECT * FROM billboard.users WHERE id = ?";
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
 

@@ -18,20 +18,22 @@
 </div>
 
 <div class="usersInformation">
-	<table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
-	<tr>
-	<th>ユーザー名</th>
-	<th>ログインID</th>
-	<th>ユーザー停止・復帰</th>
-	</tr>
-	<c:forEach items="${enteredUsers}" var="enteredUser">
+	<form action="userManager" method="post">
+		<table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
 		<tr>
-		<td><a href="editUser" >${enteredUser.name}</a></td>
-		<td>${enteredUser.loginId}</td>
-		<td><input type="button" value="停止"><input type="button" value="復帰"></td>
+		<th>ユーザー名</th>
+		<th>ログインID</th>
+		<th>ユーザー停止・復帰</th>
 		</tr>
-	</c:forEach>
-	</table>
+		<c:forEach items="${enteredUsers}" var="enteredUser">
+			<tr>
+			<td><a href="editUser?user_id=${enteredUser.id}" >${enteredUser.name}</a></td>
+			<td>${enteredUser.loginId}</td>
+			<td><input type="button" value="停止"><input type="button" value="復帰"></td>
+			</tr>
+		</c:forEach>
+		</table>
+	</form>
 </div>
 
 
