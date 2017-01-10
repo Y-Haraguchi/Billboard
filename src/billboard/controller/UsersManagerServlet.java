@@ -19,19 +19,18 @@ public class UsersManagerServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		User user = (User)request.getSession().getAttribute("loginUser");
 
-		List<User> users = new UserService().getUserList(user.getId());
+		List<User> users = new UserService().getUserList();
 
 		request.setAttribute("enteredUsers", users);
 
 		request.getRequestDispatcher("/usersManager.jsp").forward(request, response);
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-
-	}
+//
+//	@Override
+//	protected void doPost(HttpServletRequest request,
+//			HttpServletResponse response) throws IOException, ServletException {
+//
+//	}
 
 }

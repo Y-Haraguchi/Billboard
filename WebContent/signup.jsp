@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,6 +21,18 @@
 		<label for="checkpassword">確認パスワード</label>
 		<input name="checkPassword" type="password" id="checkpassword" /><br />
 
+		<br />
+		<select name="branch_id">
+			<c:forEach items="${branchList}" var="branch">
+				<option value="${branch.id}">${branch.name}</option>
+			</c:forEach>
+		</select>
+
+		<select name="assign_type_id">
+			<c:forEach items="${assignTypeList}" var="assignType">
+				<option value="${assignType.id}">${assignType.type_name}</option>
+			</c:forEach>
+		</select><br />
 
 		<input type="submit" value="登録" /><br />
 	</form>

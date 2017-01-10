@@ -34,14 +34,14 @@ public class UserService {
 			close(connection);
 		}
 	}
-	public List<User> getUserList(int userId) {
+	public List<User> getUserList() {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserDao userDao = new UserDao();
-			List<User> ret = userDao.getUsersList(connection, userId, LIMIT_NUM);
+			List<User> ret = userDao.getUsersList(connection, LIMIT_NUM);
 
 			commit(connection);
 

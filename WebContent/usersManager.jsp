@@ -13,8 +13,7 @@
 
 <div class="header">
 	<c:if test="${ not empty loginUser }">
-		<a href="newRegisterUser" >ユーザー新規登録</a>
-		<a href="" >ユーザー編集</a>
+		<a href="signup" >ユーザー新規登録</a>
 	</c:if><br />
 </div>
 
@@ -27,8 +26,8 @@
 	</tr>
 	<c:forEach items="${enteredUsers}" var="enteredUser">
 		<tr>
-		<td>"${enteredUser.name}"</td>
-		<td>"${enteredUser.loginId}"</td>
+		<td><a href="editUser" >${enteredUser.name}</a></td>
+		<td>${enteredUser.loginId}</td>
 		<td><input type="button" value="停止"><input type="button" value="復帰"></td>
 		</tr>
 	</c:forEach>

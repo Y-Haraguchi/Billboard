@@ -14,8 +14,52 @@ import billboard.exception.SQLRuntimeException;
 
 
 public class UserDao {
-	public User getUser(Connection connection, String login_id, String password) {
 
+	public void insert(Connection connection, User user) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("INSERT INTO billboard.users ( ");
+			sql.append("login_id");
+			sql.append(", password");
+			sql.append(", name");
+			sql.append(", branch_id");
+			sql.append(", assign_type_id");
+			sql.append(", is_ban");
+			sql.append(", insert_date");
+			sql.append(", update_date");
+			sql.append(") VALUES (");
+			sql.append("?");				//login_id
+			sql.append(", ?");				//password
+			sql.append(", ?");				//name
+			sql.append(", ?");				//branch_id
+			sql.append(", ?");				//assign_type_id
+			sql.append(", ?");				//is_ban
+			sql.append(", CURRENT_TIMESTAMP");
+			sql.append(", CURRENT_TIMESTAMP");
+			sql.append(")");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, user.getLoginId());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getName());
+			ps.setInt(4, user.getBranchId());
+			ps.setInt(5, user.getAssignTypeId());
+			ps.setInt(6, user.getIsBan());
+
+			ps.executeUpdate();
+
+		} catch(SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+
+	public User getUser(Connection connection, String login_id, String password) {
 
 		PreparedStatement ps = null;
 		try {
@@ -97,7 +141,7 @@ public class UserDao {
 			close(rs);
 		}
 	}
-	public List<User> getUsersList(Connection connection, Integer userId, int num) {
+	public List<User> getUsersList(Connection connection, int num) {
 
 		PreparedStatement ps = null;
 		try {
@@ -105,15 +149,8 @@ public class UserDao {
 
 			sql.append("SELECT * FROM billboard.users ");
 
-			if(userId != null) {
-				sql.append("WHERE id = ?");
-			}
-			sql.append(" ORDER BY insert_date DESC limit " + num);
+			sql.append(" ORDER BY insert_date ASC limit " + num);
 			ps = connection.prepareStatement(sql.toString());
-
-			if(userId != null) {
-				ps.setInt(1, userId);
-			}
 
 			ResultSet rs = ps.executeQuery();
 			List<User> ret = toUsersList(rs);

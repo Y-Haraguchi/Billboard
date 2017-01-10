@@ -43,12 +43,12 @@ public class HomeServlet extends HttpServlet {
 		//コメント機能実装
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("loginUser");
-//		UserMessage userMessage = (UserMessage)session.getAttribute("recordMessage");
+		UserMessage userMessage = (UserMessage) session.getAttribute("recordMessage");
 		//home.jspで入力されたコメントをsetしてDBに登録
 		Comment comment = new Comment();
 		comment.setBody(request.getParameter("commentBody"));
 		comment.setUser_id(user.getId());
-//		comment.setId(userMessage.getId());
+		comment.setId(userMessage.getMessage_id());
 
 		new NewCommentService().register(comment);
 		response.sendRedirect("home");
