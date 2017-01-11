@@ -72,7 +72,4 @@ public class User implements Serializable {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 }

@@ -24,6 +24,7 @@
 		<label for="name">名前</label>
 		<input name="name" value="${editUser.name}" id="name" />
 		<br />
+		<c:out value="${editUser.updateDate}"></c:out>
 		<select name="branch_id">
 			<c:forEach items="${branchList}" var="branch">
 				<option value="${branch.id}">${branch.name}</option>

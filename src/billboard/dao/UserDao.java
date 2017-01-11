@@ -6,10 +6,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import billboard.beans.User;
+import billboard.exception.NoRowsUpdatedRuntimeException;
 import billboard.exception.SQLRuntimeException;
 
 
@@ -52,6 +54,75 @@ public class UserDao {
 			ps.executeUpdate();
 
 		} catch(SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+	public void update(Connection connection, User user) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE billboard.users SET ");
+			sql.append("login_id = ?");
+			sql.append(", password = ?");
+			sql.append(", name = ?");
+			sql.append(", branch_id = ?");
+			sql.append(", assign_type_id = ?");
+			sql.append(", update_date = CURRENT_TIMESTAMP ");
+			sql.append("WHERE ");
+			sql.append("id = ?");
+			sql.append(" AND");
+			sql.append(" update_date = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, user.getLoginId());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getName());
+			ps.setInt(4, user.getBranchId());
+			ps.setInt(5, user.getAssignTypeId());
+			ps.setInt(6, user.getId());
+			ps.setTimestamp(7, new Timestamp(user.getUpdateDate().getTime()));
+
+			int count = ps.executeUpdate();
+			if(count == 0) {
+				throw new NoRowsUpdatedRuntimeException();
+			}
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	public void isBanUpdate(Connection connection, User user) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE billboard.users SET is_ban = ");
+			sql.append("CASE");
+			sql.append(" WHEN is_ban = 1 THEN 0 ELSE 1 ");
+			sql.append("END ");
+			sql.append(", update_date = CURRENT_TIMESTAMP ");
+			sql.append("WHERE ");
+			sql.append("id = ?");
+			sql.append(" AND");
+			sql.append(" update_date = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setInt(1, user.getId());
+			ps.setTimestamp(2, new Timestamp(user.getUpdateDate().getTime()));
+
+			int count = ps.executeUpdate();
+
+			if(count == 0) {
+				throw new NoRowsUpdatedRuntimeException();
+			}
+		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
 			close(ps);
