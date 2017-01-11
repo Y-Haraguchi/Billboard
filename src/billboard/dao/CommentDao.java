@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import billboard.beans.Comment;
+import billboard.beans.UserComment;
 import billboard.exception.SQLRuntimeException;
 
 public class CommentDao {
@@ -18,7 +19,7 @@ public class CommentDao {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO billboard.comments (");
-			sql.append("id");
+			sql.append("messages_id");
 			sql.append(", body");
 			sql.append(", insert_date");
 			sql.append(", update_date");
@@ -33,9 +34,31 @@ public class CommentDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setInt(1, comment.getId());
+			ps.setInt(1, comment.getMessage_id());
 			ps.setString(2, comment.getBody());
 			ps.setInt(3, comment.getUser_id());
+
+			ps.executeUpdate();
+
+		} catch(SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+
+	}
+	public void delete(Connection connection, UserComment userCcomment) {
+
+		PreparedStatement ps = null;
+		try {
+
+			StringBuilder sql = new StringBuilder();
+			sql.append("DELETE FROM billboard.comments WHERE id = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setInt(1, userCcomment.getId());
 
 			ps.executeUpdate();
 

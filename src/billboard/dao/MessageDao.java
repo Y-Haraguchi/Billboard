@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import billboard.beans.Message;
+import billboard.beans.UserMessage;
 import billboard.exception.SQLRuntimeException;
 
 public class MessageDao {
@@ -48,6 +49,26 @@ public class MessageDao {
 			close(ps);
 		}
 
+	}
+	public void delete(Connection connection, UserMessage userMessage) {
+
+		PreparedStatement ps = null;
+		try {
+
+			StringBuilder sql = new StringBuilder();
+			sql.append("DELETE FROM billboard.messages WHERE id = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setInt(1, userMessage.getId());
+
+			ps.executeUpdate();
+
+		} catch(SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
 	}
 
 }

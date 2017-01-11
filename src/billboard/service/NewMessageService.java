@@ -36,14 +36,14 @@ public class NewMessageService {
 			close(connection);
 		}
 	}
-	public List<UserMessage> getMessage(Integer user_id) {
+	public List<UserMessage> getMessage() {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserMessageDao messageDao = new UserMessageDao();
-			List<UserMessage> ret = messageDao.getUserMessages(connection, user_id, LIMIT_NUM);
+			List<UserMessage> ret = messageDao.getUserMessages(connection, LIMIT_NUM);
 
 			commit(connection);
 
@@ -59,6 +59,27 @@ public class NewMessageService {
 			close(connection);
 		}
 
+	}
+	public void deleteMessage(UserMessage userMessage) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			MessageDao messageDao = new MessageDao();
+			messageDao.delete(connection, userMessage);
+
+			commit(connection);
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
 	}
 
 }

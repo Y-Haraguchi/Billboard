@@ -7,6 +7,7 @@ public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
+	private int message_id;
 	private String body;
 	private Date insert_date;
 	private Date update_date;
@@ -15,6 +16,12 @@ public class Comment implements Serializable {
 
 	public int getId() {
 		return id;
+	}
+	public int getMessage_id() {
+		return message_id;
+	}
+	public void setMessage_id(int message_id) {
+		this.message_id = message_id;
 	}
 	public void setId(int id) {
 		this.id = id;

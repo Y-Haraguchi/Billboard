@@ -36,15 +36,36 @@ public class NewCommentService {
 			close(connection);
 		}
 	}
+	public void deleteComment(UserComment comment) {
 
-	public List<UserComment> getComment(Integer user_id) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			CommentDao commentDao = new CommentDao();
+			commentDao.delete(connection, comment);
+
+			commit(connection);
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+	public List<UserComment> getComment() {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserCommentDao userCommentDao = new UserCommentDao();
-			List<UserComment> ret = userCommentDao.getUserComments(connection, user_id, LIMIT_NUM);
+			List<UserComment> ret = userCommentDao.getUserComments(connection, LIMIT_NUM);
 
 			commit(connection);
 			return ret;

@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import billboard.beans.Comment;
-import billboard.beans.User;
 import billboard.beans.UserComment;
 import billboard.beans.UserMessage;
 import billboard.service.NewCommentService;
@@ -24,35 +22,37 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		User user = (User)request.getSession().getAttribute("loginUser");
-//		UserMessage userMessage = (UserMessage)request.getSession().getAttribute("recordMessage");
-//		Message messages = (Message)request.getSession().getAttribute("message");
-		List<UserMessage> messages = new NewMessageService().getMessage(user.getId());
-		List<UserComment> comments = new NewCommentService().getComment(user.getId());
 
-		request.setAttribute("messages", messages);
-		request.setAttribute("comments", comments);
+		HttpSession session = request.getSession();
+		List<UserMessage> messages = new NewMessageService().getMessage();
+		List<UserComment> comments = new NewCommentService().getComment();
+
+		session.setAttribute("messages", messages);
+		session.setAttribute("comments", comments);
+
 		request.getRequestDispatcher("/home.jsp").forward(request, response);
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		//コメント機能実装
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("loginUser");
-		UserMessage userMessage = (UserMessage) session.getAttribute("recordMessage");
-		//home.jspで入力されたコメントをsetしてDBに登録
-		Comment comment = new Comment();
-		comment.setBody(request.getParameter("commentBody"));
-		comment.setUser_id(user.getId());
-		comment.setId(userMessage.getMessage_id());
 
-		new NewCommentService().register(comment);
+		if(request.getParameter("message_id") != null) {
+			UserMessage userMomment = new UserMessage();
+			userMomment.setId(Integer.parseInt(request.getParameter("message_id")));
+
+			new NewMessageService().deleteMessage(userMomment);
+		}
+
+		if(request.getParameter("comment_id") != null) {
+			UserComment userComment = new UserComment();
+			userComment.setId(Integer.parseInt(request.getParameter("comment_id")));
+
+			new NewCommentService().deleteComment(userComment);
+		}
+
 		response.sendRedirect("home");
 	}
-
 
 }

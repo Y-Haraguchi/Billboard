@@ -14,7 +14,7 @@ import billboard.exception.SQLRuntimeException;
 
 public class UserMessageDao {
 
-	public List<UserMessage> getUserMessages(Connection connection, Integer userId, int num) {
+	public List<UserMessage> getUserMessages(Connection connection, int num) {
 
 		PreparedStatement ps = null;
 		try {
@@ -22,15 +22,8 @@ public class UserMessageDao {
 
 			sql.append("SELECT * FROM billboard.users_messages ");
 
-			if(userId != null) {
-				sql.append("WHERE user_id = ?");
-			}
-			sql.append(" ORDER BY insert_date DESC limit " + num);
+			sql.append("ORDER BY insert_date DESC limit " + num);
 			ps = connection.prepareStatement(sql.toString());
-
-			if(userId != null) {
-				ps.setInt(1, userId);
-			}
 
 			ResultSet rs = ps.executeQuery();
 			List<UserMessage> ret = toUserMessageList(rs);

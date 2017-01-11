@@ -14,23 +14,17 @@ import billboard.exception.SQLRuntimeException;
 
 public class UserCommentDao {
 
-	public List<UserComment> getUserComments(Connection connection, Integer userId, int num) {
+	public List<UserComment> getUserComments(Connection connection, int num) {
 
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
 
-			sql.append("SELECT * FROM billboard.users_messages ");
+			sql.append("SELECT * FROM billboard.users_comments");
 
-			if(userId != null) {
-				sql.append("WHERE user_id = ?");
-			}
-			sql.append(" ORDER BY insert_date DESC limit " + num);
 			ps = connection.prepareStatement(sql.toString());
-			if(userId != null) {
-				ps.setInt(1, userId);
-			}
 			ResultSet rs = ps.executeQuery();
+
 			List<UserComment> ret = toUserCommentList(rs);
 			return ret;
 		} catch(SQLException e) {
@@ -45,15 +39,17 @@ public class UserCommentDao {
 		List<UserComment> ret = new ArrayList<UserComment>();
 		try {
 			while(rs.next()) {
-				UserComment comment = new UserComment();
-				comment.setId(rs.getInt("id"));
-				comment.setName(rs.getString("name"));
-				comment.setBody(rs.getString("body"));
-				comment.setInsertDate(rs.getTimestamp("insert_date"));
-				comment.setUpdateDate(rs.getTimestamp("update_date"));
-				comment.setUser_id(rs.getInt("user_id"));
+				UserComment userComment = new UserComment();
 
-				ret.add(comment);
+				userComment.setMessage_id(rs.getInt("messages_id"));
+				userComment.setId(rs.getInt("id"));
+				userComment.setName(rs.getString("name"));
+				userComment.setBody(rs.getString("body"));
+				userComment.setInsertDate(rs.getTimestamp("insert_date"));
+				userComment.setUpdateDate(rs.getTimestamp("update_date"));
+				userComment.setUser_id(rs.getInt("user_id"));
+
+				ret.add(userComment);
 			}
 			return ret;
 		} finally {

@@ -6,6 +6,7 @@ import java.util.Date;
 public class UserComment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private int message_id;
 	private int id;
 	private String name;
 	private String body;
@@ -20,6 +21,13 @@ public class UserComment implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public int getMessage_id() {
+		return message_id;
+	}
+	public void setMessage_id(int message_id) {
+		this.message_id = message_id;
+	}
+
 	public String getName() {
 		return name;
 	}
