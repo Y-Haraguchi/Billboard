@@ -1,6 +1,8 @@
 package billboard.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,17 +24,40 @@ public class NewCommentServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 		//コメント機能実装
 		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("loginUser");
-		//home.jspで入力されたコメントをsetしてDBに登録
-		Comment comment = new Comment();
-		comment.setBody(request.getParameter("commentBody"));
-		comment.setUser_id(user.getId());
-		comment.setMessage_id(Integer.parseInt(request.getParameter("messages_id")));
+		List<String> messages = new ArrayList<String>();
 
-		new NewCommentService().register(comment);
-		session.setAttribute("comments", comment);
-		response.sendRedirect("home");
+		if(isValid(request, messages)) {
+			User user = (User)session.getAttribute("loginUser");
+			//home.jspで入力されたコメントをsetしてDBに登録
+			Comment comment = new Comment();
+			comment.setBody(request.getParameter("commentBody"));
+			comment.setUser_id(user.getId());
+			comment.setMessage_id(Integer.parseInt(request.getParameter("messages_id")));
+
+			new NewCommentService().register(comment);
+			response.sendRedirect("home");
+		} else {
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("home");
+		}
+	}
+
+	private boolean isValid(HttpServletRequest request,
+			List<String> messages) {
+		String body = request.getParameter("commentBody");
+
+		if(body.isEmpty()) {
+			messages.add("本文を入力してください");
+		}else if(500 < body.length()) {
+			messages.add("本文を５００文字以内で入力してください");
+		}
+		if(messages.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
+
 
 }

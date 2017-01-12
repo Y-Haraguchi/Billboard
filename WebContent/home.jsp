@@ -46,18 +46,6 @@ function isDeleteCommentCheck() {
 		</div><br />
 		<label>日付(type="date"):<input type="date" name="date"></label>
 		<input type="submit" value="検索">
-
-		<%-- <c:if test="${ not empty errorMessages }">
-			<div class="errorMessages">
-				<ul>
-					<c:forEach items="${errorMessages}" var="messages">
-						<li><c:out value="${messages}" />
-					</c:forEach>
-				</ul>
-			</div>
-			<c:remove var="errorMessages" scope="session"/>
-		</c:if> --%>
-
 	</div>
 	<div class="messages">
 		<c:forEach items="${messages}" var="message">
@@ -91,6 +79,16 @@ function isDeleteCommentCheck() {
 					<hr><br />
 				</c:if>
 			</c:forEach>
+			<c:if test="${ not empty errorMessages }">
+			<div class="errorMessages">
+				<ul>
+					<c:forEach items="${errorMessages}" var="messages">
+						<li><c:out value="${messages}" />
+					</c:forEach>
+				</ul>
+			</div>
+			<c:remove var="errorMessages" scope="session"/>
+			</c:if>
 			<div class="comments-area">
 				<form action="newComment" method="post">
 					<textarea name="commentBody" cols="50" rows="5" class="comment-box"></textarea>

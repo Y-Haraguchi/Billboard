@@ -1,6 +1,7 @@
 package billboard.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -37,25 +38,69 @@ public class SignUpServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
-//		String password = request.getParameter("password");
-//		String checkPassword = request.getParameter("checkPassword");
 		int branch_id = Integer.parseInt(request.getParameter("branch_id"));
 		int assign_type_id = Integer.parseInt(request.getParameter("assign_type_id"));
-		//仮判定→後にヴァリデーションを挿入
-/*		if(password != checkPassword) {
-			response.sendRedirect("signup");
-		}*/
-		User user = new User();
-		user.setLoginId(request.getParameter("login_id"));
-		user.setName(request.getParameter("name"));
-		user.setPassword(request.getParameter("password"));
-		user.setBranchId(branch_id);
-		user.setAssignTypeId(assign_type_id);
-		user.setIsBan(1);
+		List<String> messages = new ArrayList<String>();
 
-		new SignUpService().register(user);
-		session.setAttribute("recordUser", user);
-		response.sendRedirect("usersManager");
+		if(isValid(request, messages)) {
+			User user = new User();
+			user.setLoginId(request.getParameter("login_id"));
+			user.setName(request.getParameter("name"));
+			user.setPassword(request.getParameter("password"));
+			user.setBranchId(branch_id);
+			user.setAssignTypeId(assign_type_id);
+			user.setIsBan(1);
+
+			new SignUpService().register(user);
+			session.setAttribute("recordUser", user);
+			response.sendRedirect("usersManager");
+		} else {
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("signup");
+		}
 	}
+
+	private boolean isValid(HttpServletRequest request,
+			List<String> messages) {
+
+		String loginId = request.getParameter("login_id");
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String checkPassword = request.getParameter("checkPassword");
+
+		if(loginId.isEmpty()) {
+			messages.add("ログインIDを入力してください");
+		} else if(6 > loginId.length() || loginId.length() > 20) {
+			messages.add("６文字以上２０字以下で入力してください");
+		}else if(!loginId.matches("^[a-zA-Z0-9]$")) {
+			messages.add("半角英数字で入力してください");
+		}
+
+		if(password.isEmpty()) {
+			messages.add("パスワードを入力してください");
+		} else if(6 > password.length() || password.length() > 255) {
+			messages.add("６文字以上２５５文字以下で入力してください");
+		} else if(!password.matches("^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]$")) {
+			messages.add("半角文字で入力してください");
+		}
+
+		if(password != checkPassword) {
+			messages.add("確認用のパスワードが違います");
+		}
+
+		if(name.isEmpty()) {
+			messages.add("名前を入力してください");
+		} else if(10 < name.length()) {
+			messages.add("１０文字以下で入力してください");
+		}
+
+		if(messages.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 
 }

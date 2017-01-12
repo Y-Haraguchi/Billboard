@@ -12,6 +12,16 @@
 <body>
 <h2>新規投稿画面</h2>
 <div class="main_contents">
+	<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
+			<ul>
+				<c:forEach items="${errorMessages}" var="message">
+					<li><c:out value="${message}" /><br />
+				</c:forEach>
+			</ul>
+		</div>
+		<c:remove var="errorMessages" scope="session"/>
+	</c:if>
 	<form action="newMessage" method="post">
 		カテゴリー ： <input name="category" id="category"><br />
 		タイトル ： <input name="messageTitle" id="messageTitle"><br />

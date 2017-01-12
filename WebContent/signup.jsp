@@ -7,10 +7,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー新規登録画面</title>
+
+<script type="text/javascript">
+/* 	var select = document.getElementById('branchId');
+
+	select.onchange = function() {
+		//選択されているoption要素を取得
+		var selectedBranchId = this.options[ this.selectedIndex ];
+	}
+ */
+</script>
+
+
 </head>
 <body>
 <h2>ユーザー新規登録画面</h2>
 <div class="signup">
+	<c:if test="${ not empty errorMessages }">
+	<div class="errorMessages">
+		<ul>
+			<c:forEach items="${errorMessages}" var="messages">
+				<li><c:out value="${messages}" />
+			</c:forEach>
+		</ul>
+	</div>
+	<c:remove var="errorMessages" scope="session"/>
+	</c:if>
 	<form action="signup" method="post">
 		<label for="login_id">ログインID：</label>
 		<input name="login_id" id="login_id"><br />
@@ -22,7 +44,7 @@
 		<input name="checkPassword" type="password" id="checkpassword" /><br />
 
 		<br />
-		<select name="branch_id">
+		<select name="branch_id" id="branchId">
 			<c:forEach items="${branchList}" var="branch">
 				<option value="${branch.id}">${branch.name}</option>
 			</c:forEach>

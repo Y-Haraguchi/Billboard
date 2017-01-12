@@ -11,6 +11,16 @@
 <body>
 <h2>ユーザー編集画面</h2>
 <div class="editUser">
+	<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
+			<ul>
+				<c:forEach items="${errorMessages}" var="messages">
+					<li><c:out value="${messages}" />
+				</c:forEach>
+			</ul>
+		</div>
+	</c:if>
+	<c:remove var="errorMessages" scope="session"/>
 	<form action="editUser" method=post>
 		<label for="login_id">ログインID</label>
 		<input name="login_id" value="${editUser.getLoginId()}" id="login_id" />

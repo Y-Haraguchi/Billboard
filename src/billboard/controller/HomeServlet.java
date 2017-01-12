@@ -41,12 +41,8 @@ public class HomeServlet extends HttpServlet {
 		if(request.getParameter("message_id") != null) {
 			UserMessage userMomment = new UserMessage();
 			userMomment.setId(Integer.parseInt(request.getParameter("message_id")));
-//			UserComment userComment = new UserComment();
-//			userComment.setId(Integer.parseInt(request.getParameter("comment_id")));
 
 			new NewMessageService().deleteMessage(userMomment);
-//			new NewCommentService().deleteComment(userComment);
-
 		}
 
 		if(request.getParameter("comment_id") != null) {
