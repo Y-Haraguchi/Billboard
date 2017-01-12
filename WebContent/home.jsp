@@ -10,7 +10,7 @@
 <title>ホーム画面</title>
 <script type="text/javascript">
 function isDeleteMessageCheck() {
-	if(window.confirm('記事を削除しますか？')) {
+	if(window.confirm('記事を削除するとコメントも削除されますがよろしいでしょうか？')) {
 		return true;
 	} else {
 		window.alert('キャンセルされました');
@@ -36,13 +36,16 @@ function isDeleteCommentCheck() {
 		<c:if test="${ not empty loginUser }">
 			<a href="newMessage" >新規投稿</a>
 			<a href="usersManager" >ユーザー管理</a>
-			<a href="" >ログアウト</a>
+			<a href="logout" >ログアウト</a>
 		</c:if><br />
+		<br />
 
 		<div class="category_area">
 			カテゴリー ： <input name="category" id="category">
 			<input type="submit" value="カテゴリー検索">
 		</div><br />
+		<label>日付(type="date"):<input type="date" name="date"></label>
+		<input type="submit" value="検索">
 
 		<%-- <c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">
@@ -63,8 +66,10 @@ function isDeleteCommentCheck() {
 			投稿記事
 			<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
 				<input type="hidden" name="message_id" value="${message.message_id}">
-				<input type="submit" value="削除">
+				<input type="hidden" name="message_id" value="${comment.id}">
+				<input type="submit" value="投稿記事を削除">
 			</form>
+
 			<br />
 			タイトル：<c:out value="${message.title}"/><br />
 			投稿者：<c:out value="${message.name}"/><br />
@@ -75,19 +80,17 @@ function isDeleteCommentCheck() {
 			コメント
 			<c:forEach items="${comments}" var="comment">
 				<c:if test="${message.message_id == comment.message_id}">
-				コメントID:<c:out value="${comment.id}"/><br />
-				投稿者：<c:out value="${comment.name}"/><br />
-				コメント内容：<br />
-				<c:out value="${comment.body}"/><br />
-				<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
-					<input type="hidden" name="comment_id" value="${comment.id}">
-					<input type="submit" value="削除">
-				</form>
-
+					コメントID:<c:out value="${comment.id}"/><br />
+					投稿者：<c:out value="${comment.name}"/><br />
+					コメント内容：<br />
+					<c:out value="${comment.body}"/><br />
+					<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+						<input type="hidden" name="comment_id" value="${comment.id}">
+						<input type="submit" value="削除">
+					</form>
 					<hr><br />
 				</c:if>
 			</c:forEach>
-
 			<div class="comments-area">
 				<form action="newComment" method="post">
 					<textarea name="commentBody" cols="50" rows="5" class="comment-box"></textarea>
@@ -96,9 +99,9 @@ function isDeleteCommentCheck() {
 					<input type="submit" value="コメント投稿">(500文字まで)
 				</form>
 			</div>
+			<br />
 			<hr size="10" color="#0000ff" noshade><br />
 		</c:forEach>
-
 	</div>
 
 </body>
