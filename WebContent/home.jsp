@@ -50,11 +50,19 @@ function isDeleteCommentCheck() {
 		<br />
 		<br />
 
-		<div class="category_area">
-			カテゴリー ： <input name="category" id="category">
-			<input type="submit" value="カテゴリー検索">
+		<div class="refinment_area">
+			カテゴリー ：
+			<select name="messages_category">
+				<c:forEach items="${messages}" var="message">
+					<option value="${message.category}">${message.category}</option>
+				</c:forEach>
+			</select>
 		</div><br />
-		<label>日付(type="date"):<input type="date" name="date"></label>
+		<label>日付<br />
+		<input type="date" name="startDate">
+		</label>
+		～
+		<input type="date" name="endDate">
 		<input type="submit" value="検索">
 	</div>
 	<div class="messages">

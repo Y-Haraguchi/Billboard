@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import billboard.beans.User;
+import billboard.service.UserService;
 
 @WebFilter(urlPatterns = {"/home", "/newMessage", "/editUser", "/signup", "/usersManager"})
 public class AuthFilter implements Filter {
@@ -40,10 +41,11 @@ public class AuthFilter implements Filter {
 			List<String> errorMessages) {
 		HttpSession session = ((HttpServletRequest)request).getSession(true);
 		User loginUser = (User)session.getAttribute("loginUser");
+		loginUser = new UserService().getUser(loginUser.getId());
 
 		if(loginUser == null) {
 			errorMessages.add("ログインしてください");
-		} else if( loginUser.getIsBan() == 0) {
+		} else if(loginUser.getIsBan() == 0) {
 			errorMessages.add("ユーザーアカウントが停止されています");
 		}
 		if(errorMessages.size() == 0) {
