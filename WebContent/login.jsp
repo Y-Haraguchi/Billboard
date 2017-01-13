@@ -10,6 +10,16 @@
 </head>
 <body>
 <h2>ログイン画面</h2>
+<c:if test="${ not empty accessErrorMessages }">
+<div class="accessErrorMessages">
+	<ul>
+		<c:forEach items="${accessErrorMessages}" var="accessMessages">
+			<li><c:out value="${accessMessages}" />
+		</c:forEach>
+	</ul>
+</div>
+<c:remove var="accessErrorMessages" scope="session"/>
+</c:if>
 <div class="main-contents">
 	<c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">

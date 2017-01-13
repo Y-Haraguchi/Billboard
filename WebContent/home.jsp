@@ -32,12 +32,22 @@ function isDeleteCommentCheck() {
 </head>
 <body>
 <h2>ホーム画面</h2>
+<c:if test="${ not empty accessErrorMessages }">
+<div class="accessErrorMessages">
+	<ul>
+		<c:forEach items="${accessErrorMessages}" var="accessMessages">
+			<li><c:out value="${accessMessages}" />
+		</c:forEach>
+	</ul>
+</div>
+<c:remove var="accessErrorMessages" scope="session"/>
+</c:if>
+
 	<div class="header">
-		<c:if test="${ not empty loginUser }">
-			<a href="newMessage" >新規投稿</a>
-			<a href="usersManager" >ユーザー管理</a>
-			<a href="logout" >ログアウト</a>
-		</c:if><br />
+		<a href="newMessage" >新規投稿</a>
+		<a href="usersManager">ユーザー管理</a>
+		<a href="logout" >ログアウト</a>
+		<br />
 		<br />
 
 		<div class="category_area">

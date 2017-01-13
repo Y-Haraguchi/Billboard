@@ -103,7 +103,7 @@ public class EditUserServlet extends HttpServlet {
 			messages.add("ログインIDを入力してください");
 		} else if(6 > loginId.length() || loginId.length() > 20) {
 			messages.add("６文字以上２０字以下で入力してください");
-		}else if(!loginId.matches("^[a-zA-Z0-9]$")) {
+		}else if(!loginId.matches("\\w")) {
 			messages.add("半角英数字で入力してください");
 		}
 
@@ -111,11 +111,11 @@ public class EditUserServlet extends HttpServlet {
 			messages.add("パスワードを入力してください");
 		} else if(6 > password.length() || password.length() > 255) {
 			messages.add("６文字以上２５５文字以下で入力してください");
-		} else if(!password.matches("^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]$")) {
+		} else if(!password.matches("[ -~]")) {
 			messages.add("半角文字で入力してください");
 		}
 
-		if(password != checkPassword) {
+		if(!password.equals(checkPassword)) {
 			messages.add("確認用のパスワードが違います");
 		}
 

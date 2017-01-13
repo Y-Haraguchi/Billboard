@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import billboard.beans.AssignType;
+import billboard.beans.Branch;
 import billboard.beans.User;
+import billboard.service.AssignTypeService;
+import billboard.service.BranchService;
 import billboard.service.UserManagerService;
 import billboard.service.UserService;
 
@@ -24,7 +28,11 @@ public class UsersManagerServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		List<User> users = new UserService().getUserList();
+		List<Branch> branches = new BranchService().getBranches();
+		List<AssignType> assignTypes = new AssignTypeService().getAssignTypes();
 
+		session.setAttribute("branchList", branches);
+		session.setAttribute("assignTypeList", assignTypes);
 		session.setAttribute("enteredUsers", users);
 
 		request.getRequestDispatcher("/usersManager.jsp").forward(request, response);

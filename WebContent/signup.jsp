@@ -41,7 +41,7 @@
 		<label for="password">登録パスワード</label>
 		<input name="password" type="password" id="password" /><br />
 		<label for="checkpassword">確認パスワード</label>
-		<input name="checkPassword" type="password" id="checkpassword" /><br />
+		<input name="checkPassword" type="password" id="checkPassword" /><br />
 
 		<br />
 		<select name="branch_id" id="branchId">
