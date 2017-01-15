@@ -10,7 +10,7 @@
 <title>ホーム画面</title>
 <script type="text/javascript">
 function isDeleteMessageCheck() {
-	if(window.confirm('記事を削除するとコメントも削除されますがよろしいでしょうか？')) {
+	if(window.confirm('記事を削除しますか？')) {
 		return true;
 	} else {
 		window.alert('キャンセルされました');
@@ -52,7 +52,7 @@ function isDeleteCommentCheck() {
 
 		<div class="refinment_area">
 			カテゴリー ：
-			<select name="messages_category">
+			<select name="messages_category" id="category">
 				<c:forEach items="${messages}" var="message">
 					<option value="${message.category}">${message.category}</option>
 				</c:forEach>

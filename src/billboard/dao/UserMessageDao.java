@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,29 @@ public class UserMessageDao {
 			close(ps);
 		}
 	}
+
+	public List<UserMessage> getNallowUserMessages(Connection connection, Timestamp startDate, Timestamp endDate) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM billboard.users_messages ");
+			sql.append("WHERE insert_date BETWEEN ? AND ?");
+
+			ps = connection.prepareStatement(sql.toString());
+			ps.setTimestamp(1, startDate);
+			ps.setTimestamp(2, endDate);
+
+			ResultSet rs = ps.executeQuery();
+			List<UserMessage> ret = toUserMessageList(rs);
+			return ret;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+
 	private List<UserMessage> toUserMessageList(ResultSet rs) throws SQLException {
 
 		List<UserMessage> ret = new ArrayList<UserMessage>();

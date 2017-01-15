@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import billboard.beans.User;
+import billboard.service.UserService;
 
 @WebFilter(urlPatterns = {"/editUser", "/signup", "/usersManager"})
 public class UsersRoleCheckFilter implements Filter {
@@ -37,12 +38,19 @@ public class UsersRoleCheckFilter implements Filter {
 
 	public boolean isValid(ServletRequest request,
 			List<String> errorMessages) {
-		HttpSession session = ((HttpServletRequest)request).getSession(true);
+		HttpSession session = ((HttpServletRequest)request).getSession();
+		//現在ログインしているユーザー
 		User loginUser = (User)session.getAttribute("loginUser");
-		int branchId = loginUser.getBranchId();
-		int assignTypeId = loginUser.getAssignTypeId();
+		User latestUser = new User();
 
-		if(branchId != 1 || assignTypeId > 2) {
+		if(loginUser != null) {
+			//ログイン済のユーザーの最新情報
+			latestUser = new UserService().getUser(loginUser.getId());
+		}
+
+		if(loginUser.getBranchId() != 1 || loginUser.getAssignTypeId() > 2) {
+			errorMessages.add("アクセス権限がありません");
+		} else if(latestUser.getBranchId() != 1 || latestUser.getAssignTypeId() > 2) {
 			errorMessages.add("アクセス権限がありません");
 		}
 		if(errorMessages.size() == 0) {
@@ -50,7 +58,6 @@ public class UsersRoleCheckFilter implements Filter {
 		} else {
 			return false;
 		}
-
 	}
 
 	@Override

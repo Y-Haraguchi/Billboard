@@ -1,6 +1,7 @@
 package billboard.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,31 @@ public class HomeServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
+		Date startDate = new Date();
+		Date endDate = new Date();
+
+		//絞りむスタート日時をセット
+		if(request.getParameter("startDate") == null) {
+			//nullの場合、スタートをセット
+			startDate.setTime(0001/01/01);
+		} else {
+			//スタート日をセット
+			startDate.setTime(request.getDateHeader("startDate"));
+		}
+
+		//絞りむ終わりの日時をセット
+		if(request.getParameter("endDate") == null) {
+			//nullの場合、スタートをセット
+			endDate.setTime(9999/99/99);
+		} else {
+			//スタート日をセット
+			endDate.setTime(request.getDateHeader("endDate"));
+		}
+		//カテゴリー検索のサービスとDAOを実行
+
+		//カテゴリーと日時指定の検索のサービスとDAOを実行
+
+		//すべてのメッセージを表示
 		List<UserMessage> messages = new NewMessageService().getMessage();
 		List<UserComment> comments = new NewCommentService().getComment();
 

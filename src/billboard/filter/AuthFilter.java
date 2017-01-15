@@ -29,7 +29,6 @@ public class AuthFilter implements Filter {
 		List<String> errorMessages = new ArrayList<String>();
 
 		if(isValid(request, errorMessages) == true) {
-
 			//そのまま処理を流す
 			chain.doFilter(request, response);
 		} else {
@@ -39,13 +38,19 @@ public class AuthFilter implements Filter {
 	}
 	public boolean isValid(ServletRequest request,
 			List<String> errorMessages) {
-		HttpSession session = ((HttpServletRequest)request).getSession(true);
+		HttpSession session = ((HttpServletRequest)request).getSession();
+		//現在ログインしようとしているユーザー
 		User loginUser = (User)session.getAttribute("loginUser");
-		loginUser = new UserService().getUser(loginUser.getId());
+		User latestUser = new User();
 
-		if(loginUser == null) {
+		if(loginUser != null) {
+			//ログイン済みの最新のユーザー情報
+			latestUser = new UserService().getUser(loginUser.getId());
+		}
+
+		if(session.getAttribute("loginUser") == null) {
 			errorMessages.add("ログインしてください");
-		} else if(loginUser.getIsBan() == 0) {
+		} else if(loginUser.getIsBan() == 0 || latestUser.getIsBan() == 0) {
 			errorMessages.add("ユーザーアカウントが停止されています");
 		}
 		if(errorMessages.size() == 0) {

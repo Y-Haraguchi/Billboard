@@ -4,6 +4,7 @@ import static billboard.utils.CloseableUtil.*;
 import static billboard.utils.DBUtil.*;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.util.List;
 
 import billboard.beans.Message;
@@ -60,6 +61,29 @@ public class NewMessageService {
 		}
 
 	}
+	public List<UserMessage> getNallowMessages(Timestamp startDate, Timestamp endDate) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			UserMessageDao userMessage = new UserMessageDao();
+			List<UserMessage> ret = userMessage.getNallowUserMessages(connection, startDate, endDate);
+
+			commit(connection);
+
+			return ret;
+
+		} catch(RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+
+	}
+
 	public void deleteMessage(UserMessage userMessage) {
 
 		Connection connection = null;

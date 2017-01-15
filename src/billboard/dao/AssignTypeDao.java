@@ -40,7 +40,7 @@ public class AssignTypeDao {
 			while(rs.next()) {
 				AssignType assignType = new AssignType();
 				assignType.setId(rs.getInt("id"));
-				assignType.setType_name(rs.getString("name"));
+				assignType.setType_name(rs.getString("type_name"));
 
 				ret.add(assignType);
 			}
