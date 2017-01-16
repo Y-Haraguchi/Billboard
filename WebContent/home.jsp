@@ -43,28 +43,27 @@ function isDeleteCommentCheck() {
 <c:remove var="accessErrorMessages" scope="session"/>
 </c:if>
 
+
 	<div class="header">
 		<a href="newMessage" >新規投稿</a>
 		<a href="usersManager">ユーザー管理</a>
 		<a href="logout" >ログアウト</a>
 		<br />
 		<br />
+	</div>
 
-		<div class="refinment_area">
-			カテゴリー ：
-			<select name="messages_category" id="category">
-				<c:forEach items="${messages}" var="message">
-					<option value="${message.category}">${message.category}</option>
-				</c:forEach>
-			</select>
-		</div><br />
+	<form action="home" method="get">
+		カテゴリー ：
+		<input type="text" name="category">
+		<br />
 		<label>日付<br />
 		<input type="date" name="startDate">
 		</label>
 		～
 		<input type="date" name="endDate">
 		<input type="submit" value="検索">
-	</div>
+	</form>
+
 	<div class="messages">
 		<c:forEach items="${messages}" var="message">
 			<hr size="10" color="#0000ff" noshade><br />
@@ -77,6 +76,7 @@ function isDeleteCommentCheck() {
 			</form>
 
 			<br />
+			カテゴリー：<c:out value="${message.category}"/><br />
 			タイトル：<c:out value="${message.title}"/><br />
 			投稿者：<c:out value="${message.name}"/><br />
 			投稿日時：<fmt:formatDate value="${message.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" /><br />

@@ -1,6 +1,8 @@
 package billboard.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
 
 import billboard.beans.UserComment;
 import billboard.beans.UserMessage;
@@ -25,32 +29,34 @@ public class HomeServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
-		Date startDate = new Date();
-		Date endDate = new Date();
+		String category = request.getParameter("category");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+
+
+		//カテゴリーがnullだった場合、空の文字列をセット
+		if(StringUtils.isEmpty(category)) {
+			category = "";
+		}
 
 		//絞りむスタート日時をセット
-		if(request.getParameter("startDate") == null) {
-			//nullの場合、スタートをセット
-			startDate.setTime(0001/01/01);
-		} else {
-			//スタート日をセット
-			startDate.setTime(request.getDateHeader("startDate"));
+		if(StringUtils.isEmpty(startDate)) {
+			//DBからinsert_dateの最小値を取得
+			Timestamp minDate = new NewMessageService().selectMinDate();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			startDate = sdf.format(minDate);
 		}
 
-		//絞りむ終わりの日時をセット
-		if(request.getParameter("endDate") == null) {
-			//nullの場合、スタートをセット
-			endDate.setTime(9999/99/99);
-		} else {
-			//スタート日をセット
-			endDate.setTime(request.getDateHeader("endDate"));
+		//endの日時をセット
+		if(StringUtils.isEmpty(endDate)) {
+			//現在の日時を取得
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			endDate = sdf.format(date);
 		}
-		//カテゴリー検索のサービスとDAOを実行
-
-		//カテゴリーと日時指定の検索のサービスとDAOを実行
 
 		//すべてのメッセージを表示
-		List<UserMessage> messages = new NewMessageService().getMessage();
+		List<UserMessage> messages = new NewMessageService().getNallowMessages(category, startDate, endDate);
 		List<UserComment> comments = new NewCommentService().getComment();
 
 		session.setAttribute("messages", messages);

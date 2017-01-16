@@ -21,7 +21,7 @@
 		</div>
 	</c:if>
 	<c:remove var="errorMessages" scope="session"/>
-	<form action="editUser" method=post>
+	<form action="editUser" method="post">
 		<label for="login_id">ログインID</label>
 		<input name="login_id" value="${editUser.getLoginId()}" id="login_id" />
 		<br />

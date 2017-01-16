@@ -15,20 +15,17 @@ import billboard.exception.SQLRuntimeException;
 
 public class UserMessageDao {
 
-	public List<UserMessage> getUserMessages(Connection connection, int num) {
-
+	public Timestamp getMinDate(Connection connection) {
 		PreparedStatement ps = null;
 		try {
-			StringBuilder sql = new StringBuilder();
+			String sql = "SELECT MIN(insert_date) AS start_date FROM billboard.users_messages";
 
-			sql.append("SELECT * FROM billboard.users_messages ");
-
-			sql.append("ORDER BY insert_date DESC limit " + num);
-			ps = connection.prepareStatement(sql.toString());
-
+			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			List<UserMessage> ret = toUserMessageList(rs);
-			return ret;
+
+			rs.next();
+			return rs.getTimestamp("start_date");
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -36,16 +33,21 @@ public class UserMessageDao {
 		}
 	}
 
-	public List<UserMessage> getNallowUserMessages(Connection connection, Timestamp startDate, Timestamp endDate) {
+	public List<UserMessage> getNallowUserMessages(Connection connection, String category, String startDate, String endDate) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * FROM billboard.users_messages ");
-			sql.append("WHERE insert_date BETWEEN ? AND ?");
+			sql.append("WHERE category LIKE ? ");
+			sql.append(" AND insert_date BETWEEN ? AND ?");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setTimestamp(1, startDate);
-			ps.setTimestamp(2, endDate);
+			ps.setString(1, "%" +  category + "%");
+			System.out.println(category);
+			ps.setString(2, startDate);
+			System.out.println();
+			ps.setString(3, endDate + " 23:59:59");
+			System.out.println(ps);
 
 			ResultSet rs = ps.executeQuery();
 			List<UserMessage> ret = toUserMessageList(rs);

@@ -14,8 +14,6 @@ import billboard.dao.UserMessageDao;
 
 public class NewMessageService {
 
-	private static final int LIMIT_NUM = 1000;
-
 	public void register(Message message) {
 
 		Connection connection = null;
@@ -37,20 +35,20 @@ public class NewMessageService {
 			close(connection);
 		}
 	}
-	public List<UserMessage> getMessage() {
 
+	public Timestamp selectMinDate() {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			UserMessageDao messageDao = new UserMessageDao();
-			List<UserMessage> ret = messageDao.getUserMessages(connection, LIMIT_NUM);
+			UserMessageDao userMessageDao = new UserMessageDao();
+			Timestamp ret = userMessageDao.getMinDate(connection);
 
 			commit(connection);
 
 			return ret;
 
-		} catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
 		} catch (Error e) {
@@ -59,14 +57,14 @@ public class NewMessageService {
 		} finally {
 			close(connection);
 		}
-
 	}
-	public List<UserMessage> getNallowMessages(Timestamp startDate, Timestamp endDate) {
+
+	public List<UserMessage> getNallowMessages(String category, String startDate, String endDate) {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			UserMessageDao userMessage = new UserMessageDao();
-			List<UserMessage> ret = userMessage.getNallowUserMessages(connection, startDate, endDate);
+			List<UserMessage> ret = userMessage.getNallowUserMessages(connection, category, startDate, endDate);
 
 			commit(connection);
 
