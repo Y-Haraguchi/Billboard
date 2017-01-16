@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link href="./css/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー編集画面</title>
 </head>
@@ -34,7 +35,6 @@
 		<label for="name">名前</label>
 		<input name="name" value="${editUser.name}" id="name" />
 		<br />
-		<c:out value="${editUser.updateDate}"></c:out>
 		<select name="branch_id">
 			<c:forEach items="${branchList}" var="branch">
 				<option value="${branch.id}">${branch.name}</option>
