@@ -44,7 +44,7 @@ function isDeleteCommentCheck() {
 		</div>
 		<c:remove var="accessErrorMessages" scope="session"/>
 		</c:if>
-		<div class="header">
+		<div class="homeHeader">
 			<a href="newMessage" >新規投稿</a>
 			<a href="usersManager">ユーザー管理</a>
 			<a href="logout" >ログアウト</a>
@@ -107,7 +107,10 @@ function isDeleteCommentCheck() {
 						<textarea name="commentBody" cols="50" rows="5" class="comment-box"></textarea>
 						<br />
 						<input type ="hidden" name="messages_id" value="${message.message_id}"/>
-						<input type="submit" value="コメント投稿">(500文字まで)
+						<div class="comment">
+							<input type="submit" value="コメント投稿">
+						</div>
+						<label for="commentCaharaLimit">(500文字まで)</label>
 					</form>
 				</div>
 				<br />

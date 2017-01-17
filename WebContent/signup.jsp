@@ -23,7 +23,7 @@
 </head>
 <body>
 <h2>ユーザー新規登録画面</h2>
-<div class="signup">
+<div class="signUpDate">
 	<c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
@@ -36,9 +36,9 @@
 	</c:if>
 	<form action="signup" method="post">
 		<label for="login_id">ログインID：</label>
-		<input name="login_id" id="login_id"><br />
+		<input name="login_id" value="${signupUser.getLoginId()}" id="login_id"><br />
 		<label for="name">ユーザネーム：</label>
-		<input name="name" id="name"><br />
+		<input name="name"  value="${signupUser.name}" id="name"><br />
 		<label for="password">登録パスワード</label>
 		<input name="password" type="password" id="password" /><br />
 		<label for="checkpassword">確認パスワード</label>

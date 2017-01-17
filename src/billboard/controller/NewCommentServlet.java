@@ -25,11 +25,10 @@ public class NewCommentServlet extends HttpServlet {
 		//コメント機能実装
 		HttpSession session = request.getSession();
 		List<String> messages = new ArrayList<String>();
-
+		Comment comment = new Comment();
 		if(isValid(request, messages)) {
 			User user = (User)session.getAttribute("loginUser");
 			//home.jspで入力されたコメントをsetしてDBに登録
-			Comment comment = new Comment();
 			comment.setBody(request.getParameter("commentBody"));
 			comment.setUser_id(user.getId());
 			comment.setMessage_id(Integer.parseInt(request.getParameter("messages_id")));
@@ -37,6 +36,8 @@ public class NewCommentServlet extends HttpServlet {
 			new NewCommentService().register(comment);
 			response.sendRedirect("home");
 		} else {
+			comment.setBody(request.getParameter("commentBody"));
+			request.setAttribute("nowComment", comment);
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("home");
 		}

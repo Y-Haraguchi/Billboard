@@ -32,69 +32,63 @@ function isComebackCheck() {
 <body>
 <h2>ユーザー管理画面</h2>
 
-<div class="header">
+<div class=userManagerHeader>
 	<a href="signup" >ユーザー新規登録</a>
 	<a href="home" >ホーム画面へ戻る</a>
 </div>
 <br />
 <div class="usersInformation">
-	<table border="1" width="1000" cellspacing="0" cellpadding="10" bordercolor="#333333" style="table-layout:auto;">
+	<table class="type08">
+		<thead>
 		<tr>
-		<th>ユーザー名</th>
-		<th>ログインID</th>
-		<th>所属部署</th>
-		<th>役職</th>
-		<th>ユーザー停止・復帰</th>
-		<th>登録日時</th>
-		<th>最終更新日</th>
+			<th>ユーザー名</th>
+			<th>ログインID</th>
+			<th>所属部署</th>
+			<th>役職</th>
+			<th>ユーザー停止・復帰</th>
+			<th>登録日時</th>
+			<th>最終更新日</th>
 		</tr>
+		</thead>
 		<c:forEach items="${enteredUsers}" var="enteredUser">
+			<tbody>
 			<tr>
 			<td><a href="editUser?user_id=${enteredUser.id}" >${enteredUser.name}</a></td>
 			<td>${enteredUser.loginId}</td>
 			<td>
 				<c:forEach items="${branchList}" var="branch">
-					<c:if test="${enteredUser.getBranchId() == branch.id}">
-						${branch.name}
-					</c:if>
+					<c:if test="${enteredUser.getBranchId() == branch.id}">${branch.name}</c:if>
 				</c:forEach>
 			</td>
 			<td>
 				<c:forEach items="${assignTypeList}" var="assignType">
-					<c:if test="${enteredUser.getAssignTypeId() == assignType.id}">
-						${assignType.type_name}
-					</c:if>
+					<c:if test="${enteredUser.getAssignTypeId() == assignType.id}">${assignType.type_name}</c:if>
 				</c:forEach>
 			</td>
 			<td>
-			<c:if test="${enteredUser.isBan == 1}">
-				有効
-			</c:if>
-			<c:if test="${enteredUser.isBan == 0}">
-				無効
-			</c:if>
+			<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
+			<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
 			<c:if test="${enteredUser.isBan == 1}">
 				<form action="usersManager" method="post" onSubmit="return isStopCheck()">
 						<input type="hidden" name="user_id" value="${enteredUser.id}">
 						<input type="hidden" name="isBan" value="0">
-						<input type="submit" value="停止">
+						<div class="isBan"><input type="submit" value="停止"></div>
 				</form>
 			</c:if>
 			<c:if test="${enteredUser.isBan == 0}">
 				<form action="usersManager" method="post" onSubmit="return isComebackCheck()">
 					<input type="hidden" name="user_id" value="${enteredUser.id}">
 					<input type="hidden" name="isBan" value="1">
-					<input type="submit" value="復帰">
+					<div class="isBan"><input type="submit" value="復帰"></div>
 				</form>
 			</c:if>
-			<br />
 			</td>
 			<td>${enteredUser.insertDate}</td>
 			<td>${enteredUser.updateDate}</td>
 			</tr>
+			</tbody>
 		</c:forEach>
 	</table>
-	<br />
 	※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。
 </div>
 

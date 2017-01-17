@@ -41,9 +41,9 @@ public class SignUpServlet extends HttpServlet {
 		int branch_id = Integer.parseInt(request.getParameter("branch_id"));
 		int assign_type_id = Integer.parseInt(request.getParameter("assign_type_id"));
 		List<String> messages = new ArrayList<String>();
+		User user = new User();
 
 		if(isValid(request, messages)) {
-			User user = new User();
 			user.setLoginId(request.getParameter("login_id"));
 			user.setName(request.getParameter("name"));
 			user.setPassword(request.getParameter("password"));
@@ -55,6 +55,9 @@ public class SignUpServlet extends HttpServlet {
 			session.setAttribute("recordUser", user);
 			response.sendRedirect("usersManager");
 		} else {
+			user.setLoginId(request.getParameter("login_id"));
+			user.setName(request.getParameter("name"));
+			request.setAttribute("signupUser", user);
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("signup");
 		}

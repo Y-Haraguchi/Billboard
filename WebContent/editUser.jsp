@@ -11,7 +11,7 @@
 </head>
 <body>
 <h2>ユーザー編集画面</h2>
-<div class="editUser">
+<div class="signUpDate">
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>

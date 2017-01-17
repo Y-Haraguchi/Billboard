@@ -34,11 +34,11 @@ public class NewMessageServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		List<String> messages = new ArrayList<String>();
+		Message message = new Message();
 
 		if(isValid(request, messages) == true) {
 			User user = (User)session.getAttribute("loginUser");
 			//newMessage.jspからカテゴリ、タイトル、本文の入力されたデータを受け取る
-			Message message = new Message();
 			message.setCategory(request.getParameter("category"));
 			message.setTitle(request.getParameter("messageTitle"));
 			message.setBody(request.getParameter("messageBody"));
@@ -46,6 +46,10 @@ public class NewMessageServlet extends HttpServlet {
 			new NewMessageService().register(message);
 			response.sendRedirect("home");
 		} else {
+			message.setCategory(request.getParameter("category"));
+			message.setTitle(request.getParameter("messageTitle"));
+			message.setBody(request.getParameter("messageBody"));
+			session.setAttribute("nowNewMessage", message);
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("newMessage");
 		}

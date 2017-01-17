@@ -12,7 +12,7 @@
 </head>
 <body>
 <h2>新規投稿画面</h2>
-<div class="main_contents">
+<div class="newMessageDate">
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
@@ -24,11 +24,12 @@
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 	<form action="newMessage" method="post">
-		カテゴリー ： <input name="category" id="category"><br />
-		タイトル ： <input name="messageTitle" id="messageTitle"><br />
-		本文<br />
-		<textarea name="messageBody" cols="75" rows="25" class="messageBody"></textarea>
-		<br />
+		<label for="newMessage">カテゴリー</label>
+		<input name="category" value="${nowNewMessage.category}" id="category">
+		<label for="newMessage">タイトル</label>
+		<input name="messageTitle" value="${nowNewMessage.title}" id="messageTitle"><br />
+		<label for="newMessage">本文</label>
+		<textarea name="messageBody" cols="75" rows="100" class="messageBody">${nowNewMessage.body}</textarea>
 		<input type="submit" value="投稿">(1000文字まで)
 	</form>
 </div>

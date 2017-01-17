@@ -69,6 +69,7 @@ public class EditUserServlet extends HttpServlet {
 			session.removeAttribute("editUser");
 
 		} else {
+			session.setAttribute("nowEditUser", editUser);
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("editUser");
 		}
