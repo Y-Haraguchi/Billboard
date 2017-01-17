@@ -34,6 +34,29 @@ public class UserService {
 			close(connection);
 		}
 	}
+	public boolean getUsersLoginId(String loginId) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			boolean checkLoginId = userDao.getUsersLoginIdies(connection, loginId);
+
+			commit(connection);
+
+			return checkLoginId;
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 	public User getEditUser(int editUserId) {
 		Connection connection = null;
 		try {

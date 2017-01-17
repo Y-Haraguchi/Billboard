@@ -39,7 +39,7 @@ public class NewCommentServlet extends HttpServlet {
 			comment.setBody(request.getParameter("commentBody"));
 			request.setAttribute("nowComment", comment);
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("home");
+			request.getRequestDispatcher("/home.jsp").forward(request, response);
 		}
 	}
 

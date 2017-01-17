@@ -50,14 +50,14 @@ public class EditUserServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		List<String> messages = new ArrayList<String>();
+		User loginUser = (User)session.getAttribute("loginUser");
 
 		User editUser = getEditUser(request);
 		session.setAttribute("editUser", editUser);
 
 		if(isValid(request, messages) == true) {
-
 			try {
-				new EditUserService().update(editUser);
+				new EditUserService().update(editUser, loginUser);
 			} catch (NoRowsUpdatedRuntimeException e) {
 				session.removeAttribute("editUser");
 				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
@@ -71,7 +71,7 @@ public class EditUserServlet extends HttpServlet {
 		} else {
 			session.setAttribute("nowEditUser", editUser);
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("editUser");
+			request.getRequestDispatcher("/editUser.jsp").forward(request, response);
 		}
 
 	}
@@ -81,13 +81,16 @@ public class EditUserServlet extends HttpServlet {
 			throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		User editUser = (User)session.getAttribute("editUser");
+		User loginUser = (User)session.getAttribute("loginUser");
 
 		editUser.setId(editUser.getId());
 		editUser.setLoginId(request.getParameter("login_id"));
 		editUser.setPassword(request.getParameter("password"));
 		editUser.setName(request.getParameter("name"));
-		editUser.setBranchId(Integer.parseInt(request.getParameter("branch_id")));
-		editUser.setAssignTypeId(Integer.parseInt(request.getParameter("assign_type_id")));
+		if(loginUser.getBranchId() != 1) {
+			editUser.setBranchId(Integer.parseInt(request.getParameter("branch_id")));
+			editUser.setAssignTypeId(Integer.parseInt(request.getParameter("assign_type_id")));
+		}
 
 		return editUser;
 
@@ -108,9 +111,7 @@ public class EditUserServlet extends HttpServlet {
 			messages.add("半角英数字で入力してください");
 		}
 
-		if(password.isEmpty()) {
-			messages.add("パスワードを入力してください");
-		} else if(6 > password.length() || password.length() > 255) {
+		if(6 > password.length() || password.length() > 255) {
 			messages.add("６文字以上２５５文字以下で入力してください");
 		} else if(!password.matches("[ -~]")) {
 			messages.add("半角文字で入力してください");

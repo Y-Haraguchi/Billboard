@@ -11,17 +11,20 @@
 </head>
 <body>
 <h2>ユーザー編集画面</h2>
-<div class="signUpDate">
-	<c:if test="${ not empty errorMessages }">
-		<div class="errorMessages">
-			<ul>
-				<c:forEach items="${errorMessages}" var="messages">
-					<li><c:out value="${messages}" />
-				</c:forEach>
-			</ul>
-		</div>
-	</c:if>
+<c:if test="${ not empty errorMessages }">
+	<div class="errorMessages">
+		<ul>
+			<c:forEach items="${errorMessages}" var="messages">
+				<li><c:out value="${messages}" />
+			</c:forEach>
+		</ul>
+	</div>
 	<c:remove var="errorMessages" scope="session"/>
+</c:if>
+<div class="signUpDate">
+<div class="editUserHeader">
+	<a href="usersManager">ユーザー管理画面へ戻る</a>
+</div>
 	<form action="editUser" method="post">
 		<label for="login_id">ログインID</label>
 		<input name="login_id" value="${editUser.getLoginId()}" id="login_id" />
@@ -35,17 +38,34 @@
 		<label for="name">名前</label>
 		<input name="name" value="${editUser.name}" id="name" />
 		<br />
-		<select name="branch_id">
-			<c:forEach items="${branchList}" var="branch">
-				<option value="${branch.id}">${branch.name}</option>
-			</c:forEach>
-		</select>
+		<c:choose>
+			<c:when test="${editUser.getBranchId() == 1}">
+				管理者自身の所属と役職は変更できません。
+			</c:when>
+			<c:otherwise>
+				<select name="branch_id">
+					<c:forEach items="${branchList}" var="branch">
+						<c:if test="${branch.id == editUser.getBranchId()}">
+							<option value="${editUser.getBranchId()}" selected>${branch.name}</option>
+						</c:if>
+						<c:if test="${branch.id != editUser.getBranchId()}">
+							<option value="${branch.id}">${branch.name}</option>
+						</c:if>
+					</c:forEach>
+				</select>
 
-		<select name="assign_type_id">
-			<c:forEach items="${assignTypeList}" var="assignType">
-				<option value="${assignType.id}">${assignType.type_name}</option>
-			</c:forEach>
-		</select>
+				<select name="assign_type_id">
+					<c:forEach items="${assignTypeList}" var="assignType">
+						<c:if test="${assignType.id == editUser.getAssignTypeId()}">
+							<option value="${editUser.getAssignTypeId()}" selected>${assignType.type_name}</option>
+						</c:if>
+						<c:if test="${assignType.id != editUser.getAssignTypeId()}">
+							<option value="${assignType.id}">${assignType.type_name}</option>
+						</c:if>
+					</c:forEach>
+				</select>
+			</c:otherwise>
+		</c:choose>
 		<br />
 		<input type="submit" value="変更する">
 	</form>

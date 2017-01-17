@@ -66,15 +66,22 @@ function isComebackCheck() {
 				</c:forEach>
 			</td>
 			<td>
-			<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
-			<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
-			<c:if test="${enteredUser.isBan == 1}">
-				<form action="usersManager" method="post" onSubmit="return isStopCheck()">
-						<input type="hidden" name="user_id" value="${enteredUser.id}">
-						<input type="hidden" name="isBan" value="0">
-						<div class="isBan"><input type="submit" value="停止"></div>
-				</form>
-			</c:if>
+			<c:choose>
+				<c:when test="${enteredUser.getAssignTypeId() == 1}">
+					管理者自身は、アカウントの停止はできません。
+				</c:when>
+				<c:otherwise>
+					<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
+					<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
+					<c:if test="${enteredUser.isBan == 1}">
+						<form action="usersManager" method="post" onSubmit="return isStopCheck()">
+								<input type="hidden" name="user_id" value="${enteredUser.id}">
+								<input type="hidden" name="isBan" value="0">
+								<div class="isBan"><input type="submit" value="停止"></div>
+						</form>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
 			<c:if test="${enteredUser.isBan == 0}">
 				<form action="usersManager" method="post" onSubmit="return isComebackCheck()">
 					<input type="hidden" name="user_id" value="${enteredUser.id}">

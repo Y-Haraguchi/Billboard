@@ -46,10 +46,10 @@ function isDeleteCommentCheck() {
 		</c:if>
 		<div class="homeHeader">
 			<a href="newMessage" >新規投稿</a>
-			<a href="usersManager">ユーザー管理</a>
+			<c:if test="${loginUser.getAssignTypeId() == 1}">
+				<a href="usersManager">ユーザー管理</a>
+			</c:if>
 			<a href="logout" >ログアウト</a>
-			<br />
-			<br />
 		</div>
 
 		<h4>絞り込み</h4>
@@ -72,23 +72,60 @@ function isDeleteCommentCheck() {
 						　　投稿日時：<fmt:formatDate value="${message.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 					</label>
 				</div>
-				<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
-					<input type="hidden" name="message_id" value="${message.message_id}">
-					<input type="hidden" name="message_id" value="${comment.id}">
-					<div class="postDelete"><input type="submit" value="記事を削除"></div>
-				</form>
+				<c:choose>
+					<c:when test="${loginUser.getAssignTypeId() == 1}">
+						<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
+							<input type="hidden" name="message_id" value="${message.message_id}">
+							<input type="hidden" name="message_id" value="${comment.id}">
+							<div class="postDelete"><input type="submit" value="記事を削除"></div>
+						</form>
+					</c:when>
+					<c:when test="${loginUser.getAssignTypeId() == 2}">
+						<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
+							<input type="hidden" name="message_id" value="${message.message_id}">
+							<input type="hidden" name="message_id" value="${comment.id}">
+							<div class="postDelete"><input type="submit" value="記事を削除"></div>
+						</form>
+					</c:when>
+					<c:when test="${loginUser.getId() == message.getUser_id()}">
+						<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
+							<input type="hidden" name="message_id" value="${message.message_id}">
+							<input type="hidden" name="message_id" value="${comment.id}">
+							<div class="postDelete"><input type="submit" value="記事を削除"></div>
+						</form>
+					</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
+				<br />
 				<label for="subTitleBody">投稿内容</label><br />
-				<label for="body"><c:out value="${message.body}"/><br /></label>
+				<label for="body"><c:out value="${message.body}"/></label><br />
 				<hr>
 				<label for="subTitleBody">コメント</label>
 				<c:forEach items="${comments}" var="comment">
 					<c:if test="${message.message_id == comment.message_id}">
 						投稿者：<c:out value="${comment.name}"/><br />
 						<label for="commentBody"><c:out value="${comment.body}"/></label><br />
-						<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
-							<input type="hidden" name="comment_id" value="${comment.id}">
-							<div class="commentDelete"><input type="submit" value="削除"></div>
-						</form>
+						<c:choose>
+							<c:when test="${loginUser.getAssignTypeId() == 1}">
+								<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+									<input type="hidden" name="comment_id" value="${comment.id}">
+									<div class="commentDelete"><input type="submit" value="削除"></div>
+								</form>
+							</c:when>
+							<c:when test="${loginUser.getAssignTypeId() == 2}">
+								<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+									<input type="hidden" name="comment_id" value="${comment.id}">
+									<div class="commentDelete"><input type="submit" value="削除"></div>
+								</form>
+							</c:when>
+							<c:when test="${loginUser.getId() == comment.getUser_id()}">
+								<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+									<input type="hidden" name="comment_id" value="${comment.id}">
+									<div class="commentDelete"><input type="submit" value="削除"></div>
+								</form>
+							</c:when>
+							<c:otherwise></c:otherwise>
+						</c:choose>
 						<hr><br />
 					</c:if>
 				</c:forEach>
@@ -104,7 +141,7 @@ function isDeleteCommentCheck() {
 				</c:if>
 				<div class="comments-area">
 					<form action="newComment" method="post">
-						<textarea name="commentBody" cols="50" rows="5" class="comment-box"></textarea>
+						<textarea name="commentBody" cols="50" rows="5" class="comment-box"><c:out value="${messages}" /></textarea>
 						<br />
 						<input type ="hidden" name="messages_id" value="${message.message_id}"/>
 						<div class="comment">

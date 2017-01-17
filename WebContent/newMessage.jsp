@@ -13,6 +13,9 @@
 <body>
 <h2>新規投稿画面</h2>
 <div class="newMessageDate">
+<div class="homeHeader">
+	<a href="home" >ホーム画面へ戻る</a>
+</div>
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>

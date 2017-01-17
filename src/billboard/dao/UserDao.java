@@ -97,6 +97,39 @@ public class UserDao {
 			close(ps);
 		}
 	}
+	public void updateAdministrator(Connection connection, User user) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE billboard.users SET ");
+			sql.append("login_id = ?");
+			sql.append(", password = ?");
+			sql.append(", name = ?");
+			sql.append(", update_date = CURRENT_TIMESTAMP ");
+			sql.append("WHERE ");
+			sql.append("id = ?");
+			sql.append(" AND");
+			sql.append(" update_date = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, user.getLoginId());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getName());
+			ps.setInt(4, user.getId());
+			ps.setTimestamp(5, new Timestamp(user.getUpdateDate().getTime()));
+
+			int count = ps.executeUpdate();
+			if(count == 0) {
+				throw new NoRowsUpdatedRuntimeException();
+			}
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
 
 	public void isBanUpdate(Connection connection, User user) {
 		PreparedStatement ps = null;
@@ -181,6 +214,28 @@ public class UserDao {
 			} else {
 				return userList.get(0);
 			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+	public boolean getUsersLoginIdies(Connection connection, String loginId) {
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM billboard.users WHERE login_id = ?";
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, loginId);
+
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			if(loginId.equals(rs.getString("login_id"))) {
+				return true;
+			} else {
+				return false;
+			}
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

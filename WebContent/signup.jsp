@@ -23,8 +23,10 @@
 </head>
 <body>
 <h2>ユーザー新規登録画面</h2>
-<div class="signUpDate">
-	<c:if test="${ not empty errorMessages }">
+<div class="signUpHeader">
+	<a href="usersManager">ユーザー管理画面へ戻る</a>
+</div>
+<c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${errorMessages}" var="messages">
@@ -33,7 +35,8 @@
 		</ul>
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
-	</c:if>
+</c:if>
+<div class="signUpDate">
 	<form action="signup" method="post">
 		<label for="login_id">ログインID：</label>
 		<input name="login_id" value="${signupUser.getLoginId()}" id="login_id"><br />

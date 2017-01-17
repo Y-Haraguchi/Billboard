@@ -320,7 +320,7 @@ label > .label-body {
 
 /* Lists
 窶凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�� */
-ul {
+/* ul {
   list-style: circle inside; }
 ol {
   list-style: decimal inside; }
@@ -335,7 +335,7 @@ ol ul {
   font-size: 90%; }
 li {
   margin-bottom: 1rem; }
-
+ */
 
 /* Code
 窶凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�� */
@@ -611,7 +611,7 @@ label[for="body"] {
 	font-size: 16px;
   	font-weight: 600;
   	color: #000000;
-    background-color: #f0f8ff;
+    background-color: #E0FFFF;
     padding: 0.5em;
     margin-top: -25px;
 }
@@ -620,7 +620,7 @@ label[for="commentBody"] {
 	font-size: 14px;
   	font-weight: 600;
   	color: #000000;
-    background-color: #fff7ef;
+    background-color: #FFEBCD;
     padding: 0.5em;
     margin-top: 0px;
 }
@@ -732,10 +732,20 @@ label[for="isBan"]{
   	color: #FF0000;
 }
 
+/* .newMessageDate {
+    margin: -200px 0 0 -300px;  邵ｦ讓ｪ蜊雁�繧偵ロ繧ｬ繝�繧｣繝悶�槭�ｼ繧ｸ繝ｳ縺ｧ縺壹ｉ縺�
+    position: absolute;     body隕∫ｴ�縺ｫ蟇ｾ縺励※邨ｶ蟇ｾ驟咲ｽｮ
+    top: 35%;       荳顔ｫｯ繧剃ｸｭ螟ｮ縺ｫ
+    left: 50%;      蟾ｦ遶ｯ繧剃ｸｭ螟ｮ縺ｫ
+    width: 640px;   讓ｪ蟷�
+    height: 360px;  邵ｦ蟷�
+
+} */
+
 .newMessageDate {
     margin: -200px 0 0 -300px;  /*邵ｦ讓ｪ蜊雁�繧偵ロ繧ｬ繝�繧｣繝悶�槭�ｼ繧ｸ繝ｳ縺ｧ縺壹ｉ縺�*/
     position: absolute;     /*body隕∫ｴ�縺ｫ蟇ｾ縺励※邨ｶ蟇ｾ驟咲ｽｮ*/
-    top: 35%;       /*荳顔ｫｯ繧剃ｸｭ螟ｮ縺ｫ*/
+    top: 55%;       /*荳顔ｫｯ繧剃ｸｭ螟ｮ縺ｫ*/
     left: 50%;      /*蟾ｦ遶ｯ繧剃ｸｭ螟ｮ縺ｫ*/
     width: 640px;   /*讓ｪ蟷�*/
     height: 360px;  /*邵ｦ蟷�*/
@@ -768,6 +778,13 @@ line-height: 1.5em;
 
 }
 
+.signUpHeader {
+	text-align: center;
+	margin: -50px;
+	margin-top: -75px;
+	margin-left: 650px;
+}
+
 .signUpDate {
     margin: -200px 0 0 -300px;  /*邵ｦ讓ｪ蜊雁�繧偵ロ繧ｬ繝�繧｣繝悶�槭�ｼ繧ｸ繝ｳ縺ｧ縺壹ｉ縺�*/
     position: absolute;     /*body隕∫ｴ�縺ｫ蟇ｾ縺励※邨ｶ蟇ｾ驟咲ｽｮ*/
@@ -797,13 +814,25 @@ line-height: 1.5em;
   box-sizing: border-box;
   text-align: center;
 }
-
+.editUserHeader {
+	text-align: right;
+	margin: -10px;
+	margin-top: -30px;
+	margin-right: 200px;
+}
 .errorMessages {
-  text-align: center;
+  text-align: left;
   font-size: 20px;
   color: #FF0000;
+  margin-top:60px;
 }
 
+.accessErrorMessages {
+  text-align: left;
+  font-size: 20px;
+  color: #FF0000;
+  margin-top: -30px;
+}
 
 /* Media Queries
 窶凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�凪�� */

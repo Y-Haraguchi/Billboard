@@ -17,6 +17,7 @@ import billboard.beans.User;
 import billboard.service.AssignTypeService;
 import billboard.service.BranchService;
 import billboard.service.SignUpService;
+import billboard.service.UserService;
 
 @WebServlet(urlPatterns = { "/signup" })
 public class SignUpServlet extends HttpServlet {
@@ -78,6 +79,13 @@ public class SignUpServlet extends HttpServlet {
 		}else if(loginId.matches("\\w")) {
 			messages.add("半角英数字で入力してください");
 		}
+
+		//重複チェックの為にDBにアクセス
+		//ログインIDの重複チェック
+		if(new UserService().getUsersLoginId(loginId)) {
+			messages.add("ログインIDが重複しています");
+		}
+		System.out.println(new UserService().getUsersLoginId(loginId));
 
 		if(password.isEmpty()) {
 			messages.add("パスワードを入力してください");
