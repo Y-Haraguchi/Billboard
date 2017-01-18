@@ -9,6 +9,8 @@ public class UserComment implements Serializable {
 	private int message_id;
 	private int id;
 	private String name;
+	private int branch_id;
+	private int assign_type_id;
 	private String body;
 	private int user_id;
 	private Date insertDate;
@@ -27,12 +29,23 @@ public class UserComment implements Serializable {
 	public void setMessage_id(int message_id) {
 		this.message_id = message_id;
 	}
-
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getBranch_id() {
+		return branch_id;
+	}
+	public void setBranch_id(int branch_id) {
+		this.branch_id = branch_id;
+	}
+	public int getAssign_type_id() {
+		return assign_type_id;
+	}
+	public void setAssign_type_id(int assign_type_id) {
+		this.assign_type_id = assign_type_id;
 	}
 	public String getBody() {
 		return body;

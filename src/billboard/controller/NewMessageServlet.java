@@ -46,12 +46,14 @@ public class NewMessageServlet extends HttpServlet {
 			new NewMessageService().register(message);
 			response.sendRedirect("home");
 		} else {
-			message.setCategory(request.getParameter("category"));
-			message.setTitle(request.getParameter("messageTitle"));
-			message.setBody(request.getParameter("messageBody"));
-			session.setAttribute("nowNewMessage", message);
+			String category = request.getParameter("category");
+			String title = request.getParameter("messageTitle");
+			String body = request.getParameter("messageBody");
+			request.setAttribute("nowMessageCategory", category);
+			request.setAttribute("nowMessageTitle", title);
+			request.setAttribute("nowMessageBody", body);
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("newMessage");
+			request.getRequestDispatcher("newMessage.jsp").forward(request, response);
 		}
 	}
 

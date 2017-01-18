@@ -36,8 +36,10 @@ public class NewCommentServlet extends HttpServlet {
 			new NewCommentService().register(comment);
 			response.sendRedirect("home");
 		} else {
-			comment.setBody(request.getParameter("commentBody"));
-			request.setAttribute("nowComment", comment);
+			String nowComment = request.getParameter("commentBody");
+			int commentMessageId = Integer.parseInt(request.getParameter("messages_id"));
+			request.setAttribute("nowComment", nowComment);
+			request.setAttribute("commentMessageId", commentMessageId);
 			session.setAttribute("errorMessages", messages);
 			request.getRequestDispatcher("/home.jsp").forward(request, response);
 		}

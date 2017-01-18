@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,7 +35,11 @@ function isComebackCheck() {
 
 <div class=userManagerHeader>
 	<a href="signup" >ユーザー新規登録</a>
-	<a href="home" >ホーム画面へ戻る</a>
+	<a href="home" >ホーム画面</a>
+</div>
+<div class="Annotation">
+	※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。<br />
+	※管理者権限を持つユーザー自身のアカウントは停止できません。
 </div>
 <br />
 <div class="usersInformation">
@@ -67,9 +72,7 @@ function isComebackCheck() {
 			</td>
 			<td>
 			<c:choose>
-				<c:when test="${enteredUser.getAssignTypeId() == 1}">
-					管理者自身は、アカウントの停止はできません。
-				</c:when>
+				<c:when test="${enteredUser.getAssignTypeId() == 1}"></c:when>
 				<c:otherwise>
 					<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
 					<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
@@ -90,13 +93,13 @@ function isComebackCheck() {
 				</form>
 			</c:if>
 			</td>
-			<td>${enteredUser.insertDate}</td>
-			<td>${enteredUser.updateDate}</td>
+
+			<td><fmt:formatDate value="${enteredUser.insertDate}" pattern="yyyy年MM月dd日（E）　HH時mm分ss秒"/></td>
+			<td><fmt:formatDate value="${enteredUser.updateDate}" pattern="yyyy年MM月dd日（E）　HH時mm分ss秒"/></td>
 			</tr>
 			</tbody>
 		</c:forEach>
 	</table>
-	※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。
 </div>
 
 

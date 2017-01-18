@@ -5,24 +5,30 @@ import static billboard.utils.DBUtil.*;
 
 import java.sql.Connection;
 
+import org.apache.commons.lang.StringUtils;
+
 import billboard.beans.User;
 import billboard.dao.UserDao;
 import billboard.utils.CipherUtil;
 
 public class EditUserService {
 
-	public void update(User user, User loginUser) {
+	public void update(User editUser, User loginUser) {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			String encPassword = CipherUtil.encrypt(user.getPassword());
-			user.setPassword(encPassword);
+			if(!StringUtils.isEmpty(editUser.getPassword())) {
+				String encPassword = CipherUtil.encrypt(editUser.getPassword());
+				editUser.setPassword(encPassword);
+			}
+
 			UserDao userDao = new UserDao();
-			if(loginUser.getAssignTypeId() != 1) {
-				userDao.update(connection, user);
+			//
+			if(editUser.getAssignTypeId() == 1) {
+				userDao.updateAdministrator(connection, editUser);
 			} else {
-				userDao.updateAdministrator(connection, user);
+				userDao.update(connection, editUser);
 			}
 
 			commit(connection);

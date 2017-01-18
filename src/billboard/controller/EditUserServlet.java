@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+
 import billboard.beans.AssignType;
 import billboard.beans.Branch;
 import billboard.beans.User;
-import billboard.exception.NoRowsUpdatedRuntimeException;
 import billboard.service.AssignTypeService;
 import billboard.service.BranchService;
 import billboard.service.EditUserService;
@@ -53,20 +54,11 @@ public class EditUserServlet extends HttpServlet {
 		User loginUser = (User)session.getAttribute("loginUser");
 
 		User editUser = getEditUser(request);
-		session.setAttribute("editUser", editUser);
 
 		if(isValid(request, messages) == true) {
-			try {
-				new EditUserService().update(editUser, loginUser);
-			} catch (NoRowsUpdatedRuntimeException e) {
-				session.removeAttribute("editUser");
-				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
-				session.setAttribute("errorMessages", messages);
-				response.sendRedirect("editUser");
-			}
-
+			new EditUserService().update(editUser, loginUser);
 			session.setAttribute("editUser", editUser);
-			session.removeAttribute("editUser");
+			response.sendRedirect("usersManager");
 
 		} else {
 			session.setAttribute("nowEditUser", editUser);
@@ -81,17 +73,13 @@ public class EditUserServlet extends HttpServlet {
 			throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		User editUser = (User)session.getAttribute("editUser");
-		User loginUser = (User)session.getAttribute("loginUser");
 
 		editUser.setId(editUser.getId());
 		editUser.setLoginId(request.getParameter("login_id"));
 		editUser.setPassword(request.getParameter("password"));
 		editUser.setName(request.getParameter("name"));
-		if(loginUser.getBranchId() != 1) {
-			editUser.setBranchId(Integer.parseInt(request.getParameter("branch_id")));
-			editUser.setAssignTypeId(Integer.parseInt(request.getParameter("assign_type_id")));
-		}
-
+		editUser.setBranchId(Integer.parseInt(request.getParameter("branch_id")));
+		editUser.setAssignTypeId(Integer.parseInt(request.getParameter("assign_type_id")));
 		return editUser;
 
 	}
@@ -105,16 +93,16 @@ public class EditUserServlet extends HttpServlet {
 
 		if(loginId.isEmpty()) {
 			messages.add("ログインIDを入力してください");
-		} else if(6 > loginId.length() || loginId.length() > 20) {
-			messages.add("６文字以上２０字以下で入力してください");
-		}else if(!loginId.matches("\\w")) {
+		}else if(!loginId.matches("^\\w{6,20}$")) {
 			messages.add("半角英数字で入力してください");
 		}
 
-		if(6 > password.length() || password.length() > 255) {
-			messages.add("６文字以上２５５文字以下で入力してください");
-		} else if(!password.matches("[ -~]")) {
-			messages.add("半角文字で入力してください");
+		if(!StringUtils.isEmpty(password)) {
+			if(6 > password.length() || password.length() > 255) {
+				messages.add("６文字以上２５５文字以下で入力してください");
+			} else if(!password.matches("[ -~]")) {
+				messages.add("半角文字で入力してください");
+			}
 		}
 
 		if(!password.equals(checkPassword)) {

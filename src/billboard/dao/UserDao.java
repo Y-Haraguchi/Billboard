@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import billboard.beans.User;
 import billboard.exception.NoRowsUpdatedRuntimeException;
 import billboard.exception.SQLRuntimeException;
@@ -60,31 +62,41 @@ public class UserDao {
 		}
 
 	}
-	public void update(Connection connection, User user) {
+	public void update(Connection connection, User editUser) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE billboard.users SET ");
 			sql.append("login_id = ?");
-			sql.append(", password = ?");
 			sql.append(", name = ?");
 			sql.append(", branch_id = ?");
 			sql.append(", assign_type_id = ?");
-			sql.append(", update_date = CURRENT_TIMESTAMP ");
-			sql.append("WHERE ");
+			sql.append(", update_date = CURRENT_TIMESTAMP");
+			//passwordの入力がない場合の処理
+			if(!StringUtils.isEmpty(editUser.getPassword())) {
+				sql.append(", password = ?");
+			}
+			sql.append(" WHERE ");
 			sql.append("id = ?");
 			sql.append(" AND");
 			sql.append(" update_date = ?");
 
 			ps = connection.prepareStatement(sql.toString());
+			System.out.println(ps);
 
-			ps.setString(1, user.getLoginId());
-			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getName());
-			ps.setInt(4, user.getBranchId());
-			ps.setInt(5, user.getAssignTypeId());
-			ps.setInt(6, user.getId());
-			ps.setTimestamp(7, new Timestamp(user.getUpdateDate().getTime()));
+			ps.setString(1, editUser.getLoginId());
+			ps.setString(2, editUser.getName());
+			ps.setInt(3, editUser.getBranchId());
+			ps.setInt(4, editUser.getAssignTypeId());
+
+			if(StringUtils.isEmpty(editUser.getPassword())) {
+				ps.setInt(5, editUser.getId());
+				ps.setTimestamp(6, new Timestamp(editUser.getUpdateDate().getTime()));
+			} else {
+				ps.setString(5, editUser.getPassword());
+				ps.setInt(6, editUser.getId());
+				ps.setTimestamp(7, new Timestamp(editUser.getUpdateDate().getTime()));
+			}
 
 			int count = ps.executeUpdate();
 			if(count == 0) {
@@ -97,27 +109,35 @@ public class UserDao {
 			close(ps);
 		}
 	}
-	public void updateAdministrator(Connection connection, User user) {
+	public void updateAdministrator(Connection connection, User editUser) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE billboard.users SET ");
 			sql.append("login_id = ?");
-			sql.append(", password = ?");
 			sql.append(", name = ?");
 			sql.append(", update_date = CURRENT_TIMESTAMP ");
-			sql.append("WHERE ");
+			if(!StringUtils.isEmpty(editUser.getPassword())) {
+				sql.append(", password = ?");
+			}
+			sql.append(" WHERE ");
 			sql.append("id = ?");
 			sql.append(" AND");
 			sql.append(" update_date = ?");
 
 			ps = connection.prepareStatement(sql.toString());
+			System.out.println(ps);
 
-			ps.setString(1, user.getLoginId());
-			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getName());
-			ps.setInt(4, user.getId());
-			ps.setTimestamp(5, new Timestamp(user.getUpdateDate().getTime()));
+			ps.setString(1, editUser.getLoginId());
+			ps.setString(2, editUser.getName());
+			if(StringUtils.isEmpty(editUser.getPassword())) {
+				ps.setInt(3, editUser.getId());
+				ps.setTimestamp(4, new Timestamp(editUser.getUpdateDate().getTime()));
+			} else {
+				ps.setString(3, editUser.getPassword());
+				ps.setInt(4, editUser.getId());
+				ps.setTimestamp(5, new Timestamp(editUser.getUpdateDate().getTime()));
+			}
 
 			int count = ps.executeUpdate();
 			if(count == 0) {
@@ -220,7 +240,7 @@ public class UserDao {
 			close(ps);
 		}
 	}
-	public boolean getUsersLoginIdies(Connection connection, String loginId) {
+	public User getUser(Connection connection, String loginId) {
 
 		PreparedStatement ps = null;
 		try {
@@ -229,13 +249,14 @@ public class UserDao {
 			ps.setString(1, loginId);
 
 			ResultSet rs = ps.executeQuery();
-			rs.next();
-			if(loginId.equals(rs.getString("login_id"))) {
-				return true;
+			List<User> userList = toUserList(rs);
+			if (userList.isEmpty() == true) {
+				return null;
+			} else if (2 <= userList.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
 			} else {
-				return false;
+				return userList.get(0);
 			}
-
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

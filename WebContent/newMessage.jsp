@@ -28,11 +28,11 @@
 	</c:if>
 	<form action="newMessage" method="post">
 		<label for="newMessage">カテゴリー</label>
-		<input name="category" value="${nowNewMessage.category}" id="category">
+		<input name="category" type="text" id="category" value="${nowMessageCategory}" >
 		<label for="newMessage">タイトル</label>
-		<input name="messageTitle" value="${nowNewMessage.title}" id="messageTitle"><br />
+		<input name="messageTitle" type="text" id="messageTitle" value="${nowMessageTitle}" ><br />
 		<label for="newMessage">本文</label>
-		<textarea name="messageBody" cols="75" rows="100" class="messageBody">${nowNewMessage.body}</textarea>
+		<textarea name="messageBody" cols="75" rows="100" class="messageBody"><c:out value="${nowMessageBody}" /></textarea>
 		<input type="submit" value="投稿">(1000文字まで)
 	</form>
 </div>

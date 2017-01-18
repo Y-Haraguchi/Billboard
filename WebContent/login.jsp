@@ -31,12 +31,12 @@
 				</c:forEach>
 			</ul>
 		</div>
-		<c:remove var="errorMessage" scope="session"/>
+		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
 	<form action="login" method="post"><br />
 		<label for="login_id">ログインID</label>
-		<input name="login_id" type="text" id="login_id" /><br />
+		<input name="login_id" type="text" id="login_id" value="${nowLoginId}" /><br />
 
 		<label for="password">パスワード</label>
 		<input name="password" type="password" id="password" /><br />

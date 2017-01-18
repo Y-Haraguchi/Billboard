@@ -47,7 +47,6 @@ public class UserMessageDao {
 			ps.setString(2, startDate);
 			System.out.println();
 			ps.setString(3, endDate + " 23:59:59");
-			System.out.println(ps);
 
 			ResultSet rs = ps.executeQuery();
 			List<UserMessage> ret = toUserMessageList(rs);
@@ -70,6 +69,8 @@ public class UserMessageDao {
 				userMessage.setId(rs.getInt("id"));
 				userMessage.setName(rs.getString("name"));
 				userMessage.setTitle(rs.getString("title"));
+				userMessage.setBranch_id(rs.getInt("branch_id"));
+				userMessage.setAssign_type_id(rs.getInt("assign_type_id"));
 				userMessage.setCategory(rs.getString("category"));
 				userMessage.setBody(rs.getString("body"));
 				userMessage.setInsertDate(rs.getTimestamp("insert_date"));

@@ -60,7 +60,7 @@ public class SignUpServlet extends HttpServlet {
 			user.setName(request.getParameter("name"));
 			request.setAttribute("signupUser", user);
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("signup");
+			request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		}
 	}
 
@@ -72,6 +72,9 @@ public class SignUpServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String checkPassword = request.getParameter("checkPassword");
 
+		//すでにDBに登録されているlogin_idを検索
+		User signedUser = new UserService().getUsersLoginId(loginId);
+
 		if(loginId.isEmpty()) {
 			messages.add("ログインIDを入力してください");
 		} else if(6 > loginId.length() || loginId.length() > 20) {
@@ -82,11 +85,9 @@ public class SignUpServlet extends HttpServlet {
 
 		//重複チェックの為にDBにアクセス
 		//ログインIDの重複チェック
-		if(new UserService().getUsersLoginId(loginId)) {
+		if(signedUser != null) {
 			messages.add("ログインIDが重複しています");
 		}
-		System.out.println(new UserService().getUsersLoginId(loginId));
-
 		if(password.isEmpty()) {
 			messages.add("パスワードを入力してください");
 		} else if(6 > password.length() || password.length() > 255) {

@@ -39,8 +39,10 @@
 		<input name="name" value="${editUser.name}" id="name" />
 		<br />
 		<c:choose>
-			<c:when test="${editUser.getBranchId() == 1}">
+			<c:when test="${editUser.getAssignTypeId() == 1}">
 				管理者自身の所属と役職は変更できません。
+				<input type="hidden" name="branch_id" value="${editUser.getBranchId()}">
+				<input type="hidden" name="assign_type_id" value="${editUser.getAssignTypeId()}">
 			</c:when>
 			<c:otherwise>
 				<select name="branch_id">

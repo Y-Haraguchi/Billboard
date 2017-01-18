@@ -43,8 +43,10 @@ public class HomeServlet extends HttpServlet {
 		if(StringUtils.isEmpty(startDate)) {
 			//DBからinsert_dateの最小値を取得
 			Timestamp minDate = new NewMessageService().selectMinDate();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			startDate = sdf.format(minDate);
+			if(minDate != null) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				startDate = sdf.format(minDate);
+			}
 		}
 
 		//endの日時をセット

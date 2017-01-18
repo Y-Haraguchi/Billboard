@@ -44,6 +44,8 @@ public class UserCommentDao {
 				userComment.setMessage_id(rs.getInt("messages_id"));
 				userComment.setId(rs.getInt("id"));
 				userComment.setName(rs.getString("name"));
+				userComment.setBranch_id(rs.getInt("branch_id"));
+				userComment.setAssign_type_id(rs.getInt("assign_type_id"));
 				userComment.setBody(rs.getString("body"));
 				userComment.setInsertDate(rs.getTimestamp("insert_date"));
 				userComment.setUpdateDate(rs.getTimestamp("update_date"));

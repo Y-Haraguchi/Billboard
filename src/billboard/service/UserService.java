@@ -34,14 +34,14 @@ public class UserService {
 			close(connection);
 		}
 	}
-	public boolean getUsersLoginId(String loginId) {
+	public User getUsersLoginId(String loginId) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserDao userDao = new UserDao();
-			boolean checkLoginId = userDao.getUsersLoginIdies(connection, loginId);
+			User checkLoginId = userDao.getUser(connection, loginId);
 
 			commit(connection);
 
