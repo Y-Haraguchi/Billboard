@@ -5,13 +5,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="./css/style.css" rel="stylesheet" type="text/css">
+<link href="./css/login.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ログイン画面</title>
 </head>
 <body>
-<h3>ログイン画面</h3>
-<div class="loginHeader">
+<h1>ログイン画面</h1>
+<hr>
+<div class="">
 	<c:if test="${ not empty accessErrorMessages }">
 	<div class="accessErrorMessages">
 		<ul>

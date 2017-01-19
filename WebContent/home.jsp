@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="./css/style.css" rel="stylesheet" type="text/css">
+<link href="./css/homePage.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ホーム画面</title>
 <script type="text/javascript">
@@ -27,142 +27,152 @@ function isDeleteCommentCheck() {
 		return false;
 	}
 }
-
 </script>
 
 </head>
 <body>
-<h2>ホーム画面</h2>
-	<div class="home">
-		<c:if test="${ not empty accessErrorMessages }">
-		<div class="accessErrorMessages">
-			<ul>
-				<c:forEach items="${accessErrorMessages}" var="accessMessages">
-					<li><c:out value="${accessMessages}" />
-				</c:forEach>
-			</ul>
-		</div>
-		<c:remove var="accessErrorMessages" scope="session"/>
-		</c:if>
-		<div class="homeHeader">
-			<a href="newMessage" >新規投稿</a>
-			<c:if test="${loginUser.getAssignTypeId() == 1}">
-				<a href="usersManager">ユーザー管理</a>
-			</c:if>
-			<a href="logout" >ログアウト</a>
-		</div>
-
-		<h4>絞り込み</h4>
-		<div class="specialize">
-			<hr>
+<div id="top">
+	<div id="header">
+		<h1>ホーム画面</h1>
+	</div>
+	<div id="contents">
+		<div id="main">
+			<h2>絞り込み</h2>
 			<form action="home" method="get">
-				カテゴリー：<input type="text" name="category">
-				日付：<input type="date" name="startDate">  ～  <input type="date" name="endDate">
+				カテゴリー：<input type="text" name="category" value="${nowCategory}"><br>
+				日付：<input type="date" name="startDate" value="${nowStartDate}">  ～  <input type="date" name="endDate" value="${nowEndDate}">
 				<input type="submit" value="検索">
 			</form>
-		</div>
 
-		<h4>投稿記事一覧</h4>
-		<c:forEach items="${messages}" var="message">
-			<div class="messages">
-				<label for="title">タイトル：<c:out value="${message.title}"/></label>
-				<label for="subTitle">
-					カテゴリー：<c:out value="${message.category}"/>
-					　　投稿者：<c:out value="${message.name}"/>
-					　　投稿日時：<fmt:formatDate value="${message.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" />
-				</label>
-			</div>
-			<c:choose>
-				<c:when test="${loginUser.getAssignTypeId() == 1}">
-					<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
-						<input type="hidden" name="message_id" value="${message.message_id}">
-						<div class="postDelete"><input type="submit" value="記事を削除"></div>
-					</form>
-				</c:when>
-				<c:when test="${loginUser.getAssignTypeId() == 2}">
-					<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
-						<input type="hidden" name="message_id" value="${message.message_id}">
-						<div class="postDelete"><input type="submit" value="記事を削除"></div>
-					</form>
-				</c:when>
-				<c:when test="${loginUser.getId() == message.getUser_id()}">
-					<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
-						<input type="hidden" name="message_id" value="${message.message_id}">
-						<div class="postDelete"><input type="submit" value="記事を削除"></div>
-					</form>
-				</c:when>
-				<c:when test="${loginUser.getAssignTypeId() == 3 && loginUser.getBranch_id() == message.getBranch_id() && message.getAssign_type_id == 4 }">
-					<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
-						<input type="hidden" name="message_id" value="${message.message_id}">
-						<div class="postDelete"><input type="submit" value="記事を削除"></div>
-					</form>
-				</c:when>
-				<c:otherwise></c:otherwise>
-			</c:choose>
-			<br />
-			<label for="subTitleBody">投稿内容</label><br />
-			<label for="body"><c:out value="${message.body}"/></label><br />
-			<hr>
-			<label for="subTitleBody">コメント</label>
-			<c:forEach items="${comments}" var="comment">
-				<c:if test="${message.message_id == comment.message_id}">
-					投稿者：<c:out value="${comment.name}"/><br />
-					<label for="commentBody"><c:out value="${comment.body}"/></label><br />
-					<c:choose>
-						<c:when test="${loginUser.getAssignTypeId() == 1}">
-							<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
-								<input type="hidden" name="comment_id" value="${comment.id}">
-								<div class="commentDelete"><input type="submit" value="削除"></div>
-							</form>
-						</c:when>
-						<c:when test="${loginUser.getAssignTypeId() == 2}">
-							<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
-								<input type="hidden" name="comment_id" value="${comment.id}">
-								<div class="commentDelete"><input type="submit" value="削除"></div>
-							</form>
-						</c:when>
-						<c:when test="${loginUser.getId() == comment.getUser_id()}">
-							<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
-								<input type="hidden" name="comment_id" value="${comment.id}">
-								<div class="commentDelete"><input type="submit" value="削除"></div>
-							</form>
-						</c:when>
-						<c:when test="${loginUser.getAssignTypeId() == 3 && loginUser.getBranch_id() == comment.getBranch_id() && comment.getAssign_type_id == 4 }">
-							<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
-								<input type="hidden" name="comment_id" value="${comment.id}">
-								<div class="commentDelete"><input type="submit" value="削除"></div>
-							</form>
-						</c:when>
-						<c:otherwise></c:otherwise>
-					</c:choose>
-					<hr><br />
-				</c:if>
-			</c:forEach>
-			<c:if test="${message.message_id == commentMessageId}">
-				<c:if test="${ not empty errorMessages }">
-					<div class="errorMessages">
-						<ul>
-							<c:forEach items="${errorMessages}" var="messages">
-								<li><c:out value="${messages}" />
-							</c:forEach>
-						</ul>
-					</div>
-					<c:remove var="errorMessages" scope="session"/>
-				</c:if>
+			<c:if test="${ not empty accessErrorMessages }">
+				<ul>
+					<c:forEach items="${accessErrorMessages}" var="accessMessages">
+						<li><c:out value="${accessMessages}" />
+					</c:forEach>
+				</ul>
+			<c:remove var="accessErrorMessages" scope="session"/>
 			</c:if>
-			<div class="comments-area">
-				<form action="newComment" method="post">
-					<textarea name="commentBody" cols="50" rows="5" class="comment-box"><c:out value="${nowComment}" /></textarea>
-					<br />
-					<input type ="hidden" name="messages_id" value="${message.message_id}"/>
-					<div class="comment">
-						<input type="submit" value="コメント投稿">
-					</div>
-					<label for="commentCaharaLimit">(500文字まで)</label>
-				</form>
+
+
+			<h2>投稿記事一覧</h2>
+			<c:forEach items="${messages}" var="message">
+				<div id="messages">
+					<h4>タイトル：<c:out value="${message.title}"/></h4>
+					<h3>
+						カテゴリー：<c:out value="${message.category}"/>
+						　　投稿者：<c:out value="${message.name}"/>
+						　　投稿日時：<fmt:formatDate value="${message.insertDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+					</h3>
+				</div>
+				<c:choose>
+					<c:when test="${loginUser.getAssignTypeId() == 2}">
+						<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
+							<input type="hidden" name="message_id" value="${message.message_id}">
+							<input class="delMessageSubmit" type="submit" value="記事を削除">
+						</form>
+					</c:when>
+					<c:when test="${loginUser.getId() == message.getUser_id()}">
+						<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
+							<input type="hidden" name="message_id" value="${message.message_id}">
+							<input class="delMessageSubmit" type="submit" value="記事を削除">
+						</form>
+					</c:when>
+					<c:when test="${loginUser.getAssignTypeId() == 3 && loginUser.getBranchId() == message.getBranch_id() && message.getAssign_type_id() == 4 }">
+						<form action="home" method="post" onSubmit="return isDeleteMessageCheck()">
+							<input type="hidden" name="message_id" value="${message.message_id}">
+							<input id="delMessageSubmit" type="submit" value="記事を削除">
+						</form>
+					</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
+				<br />
+				<div class="messageBlock">
+					<c:out value="${message.body}"/><br /><br />
+				</div>
+				<br>
+				<h3></h3>
+				コメント<br />
+				<c:forEach items="${comments}" var="comment">
+					<c:if test="${message.message_id == comment.message_id}">
+						<div class="commentBlock" >
+							投稿者：<c:out value="${comment.name}"/>
+							投稿日時：<fmt:formatDate value="${comment.insertDate}" pattern="yyyy/MM/dd HH:mm:ss"/><br />
+							<c:out value="${comment.body}"/>
+							<div class="">
+								<c:choose>
+									<c:when test="${loginUser.getAssignTypeId() == 2}">
+										<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+											<input type="hidden" name="comment_id" value="${comment.id}">
+											<input type="submit" value="削除">
+										</form>
+									</c:when>
+									<c:when test="${loginUser.getId() == comment.getUser_id()}">
+										<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+											<input type="hidden" name="comment_id" value="${comment.id}">
+											<input type="submit" value="削除">
+										</form>
+									</c:when>
+									<c:when test="${loginUser.getAssignTypeId() == 3 && loginUser.getBranchId() == comment.getBranch_id() && comment.getAssign_type_id() == 4 }">
+										<form action="home" method="post" onSubmit="return isDeleteCommentCheck()">
+											<input type="hidden" name="comment_id" value="${comment.id}">
+											<input type="submit" value="削除">
+										</form>
+									</c:when>
+									<c:otherwise></c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						<br />
+					</c:if>
+				</c:forEach>
+				<br>
+				<c:if test="${message.message_id == commentMessageId}">
+					<c:if test="${ not empty errorMessages }">
+						<div id="errorMessages">
+							<ul>
+								<c:forEach items="${errorMessages}" var="messages">
+									<li><c:out value="${messages}" />
+								</c:forEach>
+							</ul>
+						</div>
+						<c:remove var="errorMessages" scope="session"/>
+					</c:if>
+				</c:if>
+				<div id="comments-area">
+					<form action="newComment" method="post">
+						<textarea name="commentBody" cols="50" rows="5" class="comment-box"><c:out value="${nowComment}" /></textarea>
+						<br />
+						<input type ="hidden" name="messages_id" value="${message.message_id}"/>
+						<div id="comment">
+							<input type="submit" value="コメント投稿">
+						</div>
+						(500文字まで)
+					</form>
+				</div>
+				<br />
+				<h2></h2>
+			</c:forEach>
+		</div>
+		<div id="sub">
+			<h2>メニュー</h2>
+			<div id="menu">
+				<ul>
+					<li>
+						<a href="newMessage" >新規投稿</a>
+					</li>
+					<c:if test="${loginUser.getAssignTypeId() == 1}">
+						<li>
+							<a href="usersManager">ユーザー管理</a>
+						</li>
+					</c:if>
+					<li>
+						<a href="logout" >ログアウト</a>
+					</li>
+				</ul>
 			</div>
-			<br />
-		</c:forEach>
+		</div>
 	</div>
+</div>
+
 </body>
 </html>

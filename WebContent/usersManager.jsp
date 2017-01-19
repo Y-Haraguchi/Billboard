@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="./css/style.css" rel="stylesheet" type="text/css">
+<link href="./css/userManagerPage.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー管理画面</title>
 <script type="text/javascript">
@@ -31,77 +31,77 @@ function isComebackCheck() {
 
 </head>
 <body>
-<h2>ユーザー管理画面</h2>
-
-<div class=userManagerHeader>
-	<a href="signup" >ユーザー新規登録</a>
-	<a href="home" >ホーム画面</a>
-</div>
-<div class="Annotation">
+<div id="top">
+	<div id="header">
+		<h1>ユーザー管理画面</h1>
+	</div>
+	<div class="pageHeader">
+		<a href="signup" >ユーザー新規登録</a>
+		<a href="home" >ホーム画面</a>
+	</div>
+	<br>
 	※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。<br />
 	※管理者権限を持つユーザー自身のアカウントは停止できません。
-</div>
-<br />
-<div class="usersInformation">
-	<table class="type08">
-		<thead>
-		<tr>
-			<th>ユーザー名</th>
-			<th>ログインID</th>
-			<th>所属部署</th>
-			<th>役職</th>
-			<th>ユーザー停止・復帰</th>
-			<th>登録日時</th>
-			<th>最終更新日</th>
-		</tr>
-		</thead>
-		<c:forEach items="${enteredUsers}" var="enteredUser">
-			<tbody>
+	<div id="contents">
+		<table class="type08">
+			<thead>
 			<tr>
-			<td><a href="editUser?user_id=${enteredUser.id}" >${enteredUser.name}</a></td>
-			<td>${enteredUser.loginId}</td>
-			<td>
-				<c:forEach items="${branchList}" var="branch">
-					<c:if test="${enteredUser.getBranchId() == branch.id}">${branch.name}</c:if>
-				</c:forEach>
-			</td>
-			<td>
-				<c:forEach items="${assignTypeList}" var="assignType">
-					<c:if test="${enteredUser.getAssignTypeId() == assignType.id}">${assignType.type_name}</c:if>
-				</c:forEach>
-			</td>
-			<td>
-			<c:choose>
-				<c:when test="${enteredUser.getAssignTypeId() == 1}"></c:when>
-				<c:otherwise>
-					<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
-					<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
-					<c:if test="${enteredUser.isBan == 1}">
-						<form action="usersManager" method="post" onSubmit="return isStopCheck()">
-								<input type="hidden" name="user_id" value="${enteredUser.id}">
-								<input type="hidden" name="isBan" value="0">
-								<div class="isBan"><input type="submit" value="停止"></div>
-						</form>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
-			<c:if test="${enteredUser.isBan == 0}">
-				<form action="usersManager" method="post" onSubmit="return isComebackCheck()">
-					<input type="hidden" name="user_id" value="${enteredUser.id}">
-					<input type="hidden" name="isBan" value="1">
-					<div class="isBan"><input type="submit" value="復帰"></div>
-				</form>
-			</c:if>
-			</td>
-
-			<td><fmt:formatDate value="${enteredUser.insertDate}" pattern="yyyy年MM月dd日（E）　HH時mm分ss秒"/></td>
-			<td><fmt:formatDate value="${enteredUser.updateDate}" pattern="yyyy年MM月dd日（E）　HH時mm分ss秒"/></td>
+				<th>ユーザー名</th>
+				<th>ログインID</th>
+				<th>所属部署</th>
+				<th>役職</th>
+				<th>ユーザー停止・復帰</th>
+				<th>登録日時</th>
+				<th>最終更新日</th>
 			</tr>
-			</tbody>
-		</c:forEach>
-	</table>
-</div>
+			</thead>
+			<c:forEach items="${enteredUsers}" var="enteredUser">
+				<tbody>
+				<tr>
+				<td><a href="editUser?user_id=${enteredUser.id}" >${enteredUser.name}</a></td>
+				<td>${enteredUser.loginId}</td>
+				<td>
+					<c:forEach items="${branchList}" var="branch">
+						<c:if test="${enteredUser.getBranchId() == branch.id}">${branch.name}</c:if>
+					</c:forEach>
+				</td>
+				<td>
+					<c:forEach items="${assignTypeList}" var="assignType">
+						<c:if test="${enteredUser.getAssignTypeId() == assignType.id}">${assignType.type_name}</c:if>
+					</c:forEach>
+				</td>
+				<td>
+				<c:choose>
+					<c:when test="${loginUsers.getId() == enteredUser.getId() && enteredUser.getAssignTypeId() == 1}"></c:when>
+					<c:otherwise>
+						<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
+						<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
+						<c:if test="${enteredUser.isBan == 1}">
+							<form action="usersManager" method="post" onSubmit="return isStopCheck()">
+									<input type="hidden" name="user_id" value="${enteredUser.id}">
+									<input type="hidden" name="isBan" value="0">
+									<div class="isBan"><input type="submit" value="停止"></div>
+							</form>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+				<c:if test="${enteredUser.isBan == 0}">
+					<form action="usersManager" method="post" onSubmit="return isComebackCheck()">
+						<input type="hidden" name="user_id" value="${enteredUser.id}">
+						<input type="hidden" name="isBan" value="1">
+						<div class="isBan"><input type="submit" value="復帰"></div>
+					</form>
+				</c:if>
+				</td>
 
+				<td><fmt:formatDate value="${enteredUser.insertDate}" pattern="yyyy年MM月dd日（E）HH時mm分"/></td>
+				<td><fmt:formatDate value="${enteredUser.updateDate}" pattern="yyyy年MM月dd日（E）HH時mm分"/></td>
+				</tr>
+				</tbody>
+			</c:forEach>
+		</table>
+	</div>
+</div>
 
 </body>
 </html>

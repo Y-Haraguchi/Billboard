@@ -33,6 +33,8 @@ public class HomeServlet extends HttpServlet {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 
+		request.setAttribute("nowStartDate", startDate);
+		request.setAttribute("nowEndDate", endDate);
 
 		//カテゴリーがnullだった場合、空の文字列をセット
 		if(StringUtils.isEmpty(category)) {
@@ -63,6 +65,7 @@ public class HomeServlet extends HttpServlet {
 
 		session.setAttribute("messages", messages);
 		session.setAttribute("comments", comments);
+		request.setAttribute("nowCategory", category);
 
 		request.getRequestDispatcher("/home.jsp").forward(request, response);
 	}

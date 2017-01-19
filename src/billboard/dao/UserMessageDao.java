@@ -33,13 +33,14 @@ public class UserMessageDao {
 		}
 	}
 
-	public List<UserMessage> getNallowUserMessages(Connection connection, String category, String startDate, String endDate) {
+	public List<UserMessage> getNallowUserMessages(Connection connection, String category, String startDate, String endDate, int num) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT * FROM billboard.users_messages ");
 			sql.append("WHERE category LIKE ? ");
 			sql.append(" AND insert_date BETWEEN ? AND ?");
+			sql.append("ORDER BY insert_date DESC limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, "%" +  category + "%");

@@ -27,10 +27,11 @@ public class UsersManagerServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
+		User loginUser = (User)session.getAttribute("loginUser");
 		List<User> users = new UserService().getUserList();
 		List<Branch> branches = new BranchService().getBranches();
 		List<AssignType> assignTypes = new AssignTypeService().getAssignTypes();
-
+		session.setAttribute("loginUsers", loginUser);
 		session.setAttribute("branchList", branches);
 		session.setAttribute("assignTypeList", assignTypes);
 		session.setAttribute("enteredUsers", users);

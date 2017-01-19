@@ -48,9 +48,9 @@ public class UsersRoleCheckFilter implements Filter {
 			latestUser = new UserService().getUser(loginUser.getId());
 		}
 
-		if(loginUser.getBranchId() != 1 || loginUser.getAssignTypeId() > 2) {
+		if(loginUser.getBranchId() != 1 || loginUser.getAssignTypeId() != 1) {
 			errorMessages.add("アクセス権限がありません");
-		} else if(latestUser.getBranchId() != 1 || latestUser.getAssignTypeId() > 2) {
+		} else if(latestUser.getBranchId() != 1 || latestUser.getAssignTypeId() != 1) {
 			errorMessages.add("アクセス権限がありません");
 		}
 		if(errorMessages.size() == 0) {

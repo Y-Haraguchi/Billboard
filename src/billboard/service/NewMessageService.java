@@ -14,6 +14,8 @@ import billboard.dao.UserMessageDao;
 
 public class NewMessageService {
 
+	private static final int LIMIT_NUM = 1000;
+
 	public void register(Message message) {
 
 		Connection connection = null;
@@ -64,7 +66,7 @@ public class NewMessageService {
 		try {
 			connection = getConnection();
 			UserMessageDao userMessage = new UserMessageDao();
-			List<UserMessage> ret = userMessage.getNallowUserMessages(connection, category, startDate, endDate);
+			List<UserMessage> ret = userMessage.getNallowUserMessages(connection, category, startDate, endDate,LIMIT_NUM);
 
 			commit(connection);
 
