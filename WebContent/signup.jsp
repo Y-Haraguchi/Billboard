@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="./css/style.css" rel="stylesheet" type="text/css">
+<link href="./css/signupPage.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー新規登録画面</title>
 
@@ -22,48 +22,64 @@
 
 </head>
 <body>
-<h2>ユーザー新規登録画面</h2>
-<div class="signUpHeader">
-	<a href="usersManager">ユーザー管理画面へ戻る</a>
-</div>
-<c:if test="${ not empty errorMessages }">
-	<div class="errorMessages">
+<div id="top">
+	<div id="header">
+		<h1>ユーザー新規登録画面</h1>
+	</div>
+	<div id="menu">
 		<ul>
-			<c:forEach items="${errorMessages}" var="messages">
-				<li><c:out value="${messages}" />
-			</c:forEach>
+			<li><a href="usersManager">ユーザー管理画面へ</a></li>
 		</ul>
 	</div>
-	<c:remove var="errorMessages" scope="session"/>
-</c:if>
-<div class="signUpDate">
-	<form action="signup" method="post">
-		<label for="login_id">ログインID：</label>
-		<input name="login_id" value="${signupUser.getLoginId()}" id="login_id"><br />
-		<label for="name">ユーザネーム：</label>
-		<input name="name"  value="${signupUser.name}" id="name"><br />
-		<label for="password">登録パスワード</label>
-		<input name="password" type="password" id="password" /><br />
-		<label for="checkpassword">確認パスワード</label>
-		<input name="checkPassword" type="password" id="checkPassword" /><br />
+	<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
+			<ul>
+				<c:forEach items="${errorMessages}" var="messages">
+					<li><c:out value="${messages}" />
+				</c:forEach>
+			</ul>
+		</div>
+		<c:remove var="errorMessages" scope="session"/>
+	</c:if>
+	<div id="contents">
+		<div id="form">
+			<form action="signup" method="post">
+				<p>ログインID</p>
+				<p class="mail"><input name="login_id" type="text" value="${signupUser.getLoginId()}" id="login_id">
+				(半角英数字で6文字以上～20文字以下)
+				</p>
 
-		<br />
-		<select name="branch_id" id="branchId">
-			<c:forEach items="${branchList}" var="branch">
-				<option value="${branch.id}">${branch.name}</option>
-			</c:forEach>
-		</select>
+				<p>ユーザネーム</p>
+				<p class="mail"><input name="name" type="text" value="${signupUser.name}" id="name">
+				(10文字以下)
+				<p>
+				<p>登録パスワード<p>
+				<p class="pass"><input name="password" type="password" id="password" />
+				(記号を含む半角文字6文字以上255文字以下)
+				<p>確認パスワード<p>
+				<p class="pass"><input name="checkPassword" type="password" id="checkPassword" />
+				(登録用と同じパスワードを入力してください)
+				<p>
 
-		<select name="assign_type_id">
-			<c:forEach items="${assignTypeList}" var="assignType">
-				<option value="${assignType.id}">${assignType.type_name}</option>
-			</c:forEach>
-		</select><br />
+				<br />
+				<select name="branch_id" id="branchId">
+					<c:forEach items="${branchList}" var="branch">
+						<option value="${branch.id}">${branch.name}</option>
+					</c:forEach>
+				</select>
 
-		<input type="submit" value="登録" /><br />
-	</form>
+				<select name="assign_type_id">
+					<c:forEach items="${assignTypeList}" var="assignType">
+						<option value="${assignType.id}">${assignType.type_name}</option>
+					</c:forEach>
+				</select>
+				<br />
+				<br />
+				<p class="submit"><input type="submit" value="登録" /></p>
+			</form>
+		</div>
+	</div>
 </div>
-
 
 </body>
 </html>

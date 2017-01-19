@@ -39,8 +39,8 @@ function isDeleteCommentCheck() {
 		<div id="main">
 			<h2>絞り込み</h2>
 			<form action="home" method="get">
-				カテゴリー：<input type="text" name="category" value="${nowCategory}"><br>
-				日付：<input type="date" name="startDate" value="${nowStartDate}">  ～  <input type="date" name="endDate" value="${nowEndDate}">
+				カテゴリー：<input type="text" name="category" value="${nowCategory}"><br><br>
+				日付：　　<input type="date" name="startDate" value="${nowStartDate}">  ～  <input type="date" name="endDate" value="${nowEndDate}">
 				<input type="submit" value="検索">
 			</form>
 
@@ -52,8 +52,8 @@ function isDeleteCommentCheck() {
 				</ul>
 			<c:remove var="accessErrorMessages" scope="session"/>
 			</c:if>
-
-
+			<br>
+			<br>
 			<h2>投稿記事一覧</h2>
 			<c:forEach items="${messages}" var="message">
 				<div id="messages">

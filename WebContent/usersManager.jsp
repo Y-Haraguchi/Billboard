@@ -35,13 +35,21 @@ function isComebackCheck() {
 	<div id="header">
 		<h1>ユーザー管理画面</h1>
 	</div>
-	<div class="pageHeader">
-		<a href="signup" >ユーザー新規登録</a>
-		<a href="home" >ホーム画面</a>
+	<div id="menu">
+		<ul>
+			<li>
+				<a href="home" >ホーム画面</a>
+			</li>
+			<li>
+				<a href="signup" >ユーザー新規登録</a>
+			</li>
+		</ul>
 	</div>
 	<br>
-	※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。<br />
-	※管理者権限を持つユーザー自身のアカウントは停止できません。
+	<div id="main">
+		※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。<br />
+		※管理者権限を持つユーザー自身のアカウントは停止できません。
+	</div>
 	<div id="contents">
 		<table class="type08">
 			<thead>

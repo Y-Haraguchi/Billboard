@@ -6,35 +6,57 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="./css/style.css" rel="stylesheet" type="text/css">
+<link href="./css/newMessagePage.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新規投稿画面</title>
 </head>
 <body>
-<h2>新規投稿画面</h2>
-<div class="newMessageDate">
-<div class="homeHeader">
-	<a href="home" >ホーム画面へ戻る</a>
-</div>
-	<c:if test="${ not empty errorMessages }">
-		<div class="errorMessages">
-			<ul>
-				<c:forEach items="${errorMessages}" var="message">
-					<li><c:out value="${message}" /><br />
-				</c:forEach>
-			</ul>
+<div id="top">
+	<div id="header">
+		<h1>新規投稿画面</h1>
+	</div>
+	<div id="menu">
+		<ul>
+			<li>
+				<a href="home" >ホーム画面</a>
+			</li>
+		</ul>
+	</div>
+	<br>
+	<div id="contents">
+		<div id="main">
+			<c:if test="${ not empty errorMessages }">
+				<div class="errorMessages">
+					<ul>
+						<c:forEach items="${errorMessages}" var="message">
+							<li><c:out value="${message}" /><br />
+						</c:forEach>
+					</ul>
+				</div>
+				<c:remove var="errorMessages" scope="session"/>
+			</c:if>
+			<br>
+			<form action="newMessage" method="post">
+				カテゴリー
+				<input name="category" type="text" id="category" value="${nowMessageCategory}" >
+				(10文字以内で入力してください)
+				<br />
+				<br />
+				タイトル：
+				<input name="messageTitle" type="text" id="messageTitle" value="${nowMessageTitle}" >
+				(50文字以内で入力してください)
+				<br />
+				<br />
+				<h3></h3>
+				<br />
+				本文
+				<textarea name="messageBody" cols="95" rows="25"><c:out value="${nowMessageBody}" /></textarea>
+				<br>
+				<br>
+				<input type="submit" value="投稿">(1000文字まで)
+			</form>
 		</div>
-		<c:remove var="errorMessages" scope="session"/>
-	</c:if>
-	<form action="newMessage" method="post">
-		<label for="newMessage">カテゴリー</label>
-		<input name="category" type="text" id="category" value="${nowMessageCategory}" >
-		<label for="newMessage">タイトル</label>
-		<input name="messageTitle" type="text" id="messageTitle" value="${nowMessageTitle}" ><br />
-		<label for="newMessage">本文</label>
-		<textarea name="messageBody" cols="75" rows="100" class="messageBody"><c:out value="${nowMessageBody}" /></textarea>
-		<input type="submit" value="投稿">(1000文字まで)
-	</form>
+	</div>
 </div>
 
 </body>
