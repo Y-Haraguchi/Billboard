@@ -3,7 +3,6 @@
 body {
    margin:0;
    padding:0;
-   text-align:center;
    line-height:1.6;
    letter-spacing:1px;
    font-family:Verdana, Helvetica, sans-serif;
@@ -12,7 +11,7 @@ body {
    border-top:10px solid #0080B0;
    background:#fff url("../images/bg.gif") 50% 50% repeat-y fixed;
 }
-p,form,input{margin: 0}
+input{margin: 0}
 
 a {
    color:#333;
@@ -33,7 +32,7 @@ h1,h2,h3,h4,h5,h6 {
 #top {
    width:780px;
    margin:0 auto;
-   text-align:center;
+   text-align:left;
 }
 
 #errorMessage {
@@ -46,6 +45,7 @@ h1,h2,h3,h4,h5,h6 {
     margin: 0px auto;
     padding: 20px;
     border: 1px solid #555;
+
 }
 
 #menu {
@@ -126,12 +126,13 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 
-form p{
+#form p {
     font-size: 14px;
-    }
+    text-align: left;
+}
 
-.form-title{
-    text-align: center;
+.form-title {
+    text-align: left;
     }
 
 .mail,.pass{
