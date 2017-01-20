@@ -24,18 +24,18 @@
 <body>
 <div id="top">
 	<div id="header">
-		<h1>ユーザー新規登録画面</h1>
+		<h1>ユーザー新規登録</h1>
 	</div>
 	<div id="menu">
 		<ul>
-			<li><a href="usersManager">ユーザー管理画面へ</a></li>
+			<li><a href="usersManager">戻る</a></li>
 		</ul>
 	</div>
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
 				<c:forEach items="${errorMessages}" var="messages">
-					<li><c:out value="${messages}" />
+					<h6><c:out value="${messages}" /></h6>
 				</c:forEach>
 			</ul>
 		</div>

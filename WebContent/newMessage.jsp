@@ -13,12 +13,12 @@
 <body>
 <div id="top">
 	<div id="header">
-		<h1>新規投稿画面</h1>
+		<h1>新規投稿</h1>
 	</div>
 	<div id="menu">
 		<ul>
 			<li>
-				<a href="home" >ホーム画面</a>
+				<a href="home" >ホーム</a>
 			</li>
 		</ul>
 	</div>
@@ -29,7 +29,7 @@
 				<div class="errorMessages">
 					<ul>
 						<c:forEach items="${errorMessages}" var="message">
-							<li><c:out value="${message}" /><br />
+							<h6><c:out value="${message}" /></h6><br />
 						</c:forEach>
 					</ul>
 				</div>
@@ -42,7 +42,7 @@
 				(10文字以内で入力してください)
 				<br />
 				<br />
-				タイトル：
+				タイトル
 				<input name="messageTitle" type="text" id="messageTitle" value="${nowMessageTitle}" >
 				(50文字以内で入力してください)
 				<br />
@@ -50,7 +50,7 @@
 				<h3></h3>
 				<br />
 				本文
-				<textarea name="messageBody" cols="95" rows="25"><c:out value="${nowMessageBody}" /></textarea>
+				<textarea name="messageBody" cols="95" rows="25" wrap="hard"><c:out value="${nowMessageBody}" /></textarea>
 				<br>
 				<br>
 				<input type="submit" value="投稿">(1000文字まで)

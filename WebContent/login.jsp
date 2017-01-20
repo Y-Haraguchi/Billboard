@@ -12,29 +12,28 @@
 <body>
 <div id="top">
 	<div id="header">
-		<h1>ログイン画面</h1>
+		<h1>ログイン</h1>
 	</div>
-	<c:if test="${ not empty accessErrorMessages }">
-	<div class="accessErrorMessages">
-		<ul>
-			<c:forEach items="${accessErrorMessages}" var="accessMessages">
-				<li><c:out value="${accessMessages}" />
-			</c:forEach>
-		</ul>
-	</div>
-	<c:remove var="accessErrorMessages" scope="session"/>
-	</c:if>
-
-	<c:if test="${ not empty errorMessages }">
-		<div class="errorMessages">
+	<div id="errorMessage">
+		<c:if test="${ not empty accessErrorMessages }">
 			<ul>
-				<c:forEach items="${ errorMessages }" var="messages">
-					<li><c:out value="${ messages }" /></li>
+				<c:forEach items="${accessErrorMessages}" var="accessMessages">
+					<h5><c:out value="${accessMessages}" /></h5>
 				</c:forEach>
 			</ul>
-		</div>
-		<c:remove var="errorMessages" scope="session"/>
-	</c:if>
+			<c:remove var="accessErrorMessages" scope="session"/>
+		</c:if>
+
+		<c:if test="${ not empty errorMessages }">
+			<ul>
+				<c:forEach items="${ errorMessages }" var="messages">
+					<h5><c:out value="${ messages }" /></h5>
+				</c:forEach>
+			</ul>
+			<c:remove var="errorMessages" scope="session"/>
+		</c:if>
+	</div>
+	<br>
 	<div id="form">
 		<form action="login" method="post">
 			<p>ログインID</p>

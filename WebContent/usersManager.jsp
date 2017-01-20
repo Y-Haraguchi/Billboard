@@ -33,24 +33,33 @@ function isComebackCheck() {
 <body>
 <div id="top">
 	<div id="header">
-		<h1>ユーザー管理画面</h1>
+		<h1>ユーザー管理</h1>
 	</div>
 	<div id="menu">
 		<ul>
 			<li>
-				<a href="home" >ホーム画面</a>
+				<a href="home" >ホーム</a>
 			</li>
 			<li>
 				<a href="signup" >ユーザー新規登録</a>
 			</li>
 		</ul>
 	</div>
-	<br>
+	<div id="errorMessage">
+		<c:if test="${ not empty errorMessages }">
+			<ul>
+				<c:forEach items="${ errorMessages }" var="messages">
+					<h5><c:out value="${ messages }" /></h5>
+				</c:forEach>
+			</ul>
+			<c:remove var="errorMessages" scope="session"/>
+		</c:if>
+	</div>
 	<div id="main">
 		※各ユーザーの名前をクリックするとユーザー編集画面へ遷移します。<br />
 		※管理者権限を持つユーザー自身のアカウントは停止できません。
 	</div>
-	<div id="contents">
+	<div id="type08">
 		<table class="type08">
 			<thead>
 			<tr>

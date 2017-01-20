@@ -30,19 +30,37 @@ public class EditUserServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
 
-		if(request.getParameter("user_id") != null) {
+		if(isGetValid(request, messages) == true) {
 			int editUserId = Integer.parseInt(request.getParameter("user_id"));
 			User editUser = new UserService().getEditUser(editUserId);
+			List<Branch> branches = new BranchService().getBranches();
+			List<AssignType> assignTypes = new AssignTypeService().getAssignTypes();
+			session.setAttribute("branchList", branches);
+			session.setAttribute("assignTypeList", assignTypes);
 			session.setAttribute("editUser", editUser);
+			request.getRequestDispatcher("/editUser.jsp").forward(request, response);
+		} else {
+			session.setAttribute("errorMessages", messages);
+			request.getRequestDispatcher("/usersManager.jsp").forward(request, response);
+		}
+	}
+
+	private boolean isGetValid(HttpServletRequest request,
+			List<String> messages) {
+		int editUserId = Integer.parseInt(request.getParameter("user_id"));
+		User editUser = new UserService().getEditUser(editUserId);
+
+		if(editUser == null) {
+			messages.add("不正なアクセスがありました");
+		}
+		if(messages.size() == 0) {
+			return true;
+		} else {
+			return false;
 		}
 
-		List<Branch> branches = new BranchService().getBranches();
-		List<AssignType> assignTypes = new AssignTypeService().getAssignTypes();
-
-		session.setAttribute("branchList", branches);
-		session.setAttribute("assignTypeList", assignTypes);
-		request.getRequestDispatcher("/editUser.jsp").forward(request, response);
 	}
 
 	@Override
@@ -100,17 +118,19 @@ public class EditUserServlet extends HttpServlet {
 		if(!StringUtils.isEmpty(password)) {
 			if(6 > password.length() || password.length() > 255) {
 				messages.add("６文字以上２５５文字以下で入力してください");
-			} else if(!password.matches("[ -~]")) {
+			} else if(password.matches("[ -~]")) {
 				messages.add("半角文字で入力してください");
 			}
 		}
 
-		if(!password.equals(checkPassword)) {
-			messages.add("確認用のパスワードが違います");
+		if(!StringUtils.isEmpty(checkPassword)) {
+			if(!password.equals(checkPassword)) {
+				messages.add("確認用のパスワードが違います");
+			}
 		}
 
 		if(name.isEmpty()) {
-			messages.add("名前を入力してください");
+			messages.add("ユーザーネームを入力してください");
 		} else if(10 < name.length()) {
 			messages.add("１０文字以下で入力してください");
 		}

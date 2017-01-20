@@ -23,7 +23,7 @@
 		<div class="errorMessages">
 			<ul>
 				<c:forEach items="${errorMessages}" var="messages">
-					<li><c:out value="${messages}" />
+					<h6><c:out value="${messages}" /></h6>
 				</c:forEach>
 			</ul>
 		</div>
@@ -33,12 +33,12 @@
 		<div id="form">
 			<form action="editUser" method="post">
 				<p>ログインID</p>
-				<p class="mail"><input name="login_id" type="text" value="${signupUser.getLoginId()}" id="login_id">
+				<p class="mail"><input name="login_id" type="text" value="${editUser.getLoginId()}" id="login_id">
 				(半角英数字で6文字以上～20文字以下)
 				</p>
 
 				<p>ユーザネーム</p>
-				<p class="mail"><input name="name" type="text" value="${signupUser.name}" id="name">
+				<p class="mail"><input name="name" type="text" value="${editUser.name}" id="name">
 				(10文字以下)
 				<p>
 				<p>登録パスワード<p>

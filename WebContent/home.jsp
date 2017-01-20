@@ -3,6 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,6 +28,7 @@ function isDeleteCommentCheck() {
 		return false;
 	}
 }
+
 </script>
 
 </head>
@@ -43,17 +45,24 @@ function isDeleteCommentCheck() {
 				日付：　　<input type="date" name="startDate" value="${nowStartDate}">  ～  <input type="date" name="endDate" value="${nowEndDate}">
 				<input type="submit" value="検索">
 			</form>
-
+			<div id="searchReset">
+				<form action="home" method="get">
+					<input type="hidden" name="category" value="">
+					<input type="hidden" name="startDate" value="">
+					<input type="hidden" name="endDate" value="">
+					<input type="submit" value="リセット">
+				</form>
+			</div>
+			<br>
 			<c:if test="${ not empty accessErrorMessages }">
 				<ul>
 					<c:forEach items="${accessErrorMessages}" var="accessMessages">
-						<li><c:out value="${accessMessages}" />
+						<h6><c:out value="${accessMessages}" /></h6>
 					</c:forEach>
 				</ul>
 			<c:remove var="accessErrorMessages" scope="session"/>
 			</c:if>
-			<br>
-			<br>
+
 			<h2>投稿記事一覧</h2>
 			<c:forEach items="${messages}" var="message">
 				<div id="messages">
@@ -85,19 +94,25 @@ function isDeleteCommentCheck() {
 					</c:when>
 					<c:otherwise></c:otherwise>
 				</c:choose>
-				<br />
+				【本文】<br />
 				<div class="messageBlock">
-					<c:out value="${message.body}"/><br /><br />
+					<c:forEach items="${fn:split(message.body, '
+					')}" var="str1">
+						<c:out value="${str1}"/><br>
+					</c:forEach>
 				</div>
 				<br>
 				<h3></h3>
-				コメント<br />
+				【コメント】<br />
 				<c:forEach items="${comments}" var="comment">
 					<c:if test="${message.message_id == comment.message_id}">
 						<div class="commentBlock" >
 							投稿者：<c:out value="${comment.name}"/>
 							投稿日時：<fmt:formatDate value="${comment.insertDate}" pattern="yyyy/MM/dd HH:mm:ss"/><br />
-							<c:out value="${comment.body}"/>
+							<c:forEach items="${fn:split(comment.body, '
+							')}" var="str2">
+								<c:out value="${str2}"/><br>
+							</c:forEach>
 							<div class="">
 								<c:choose>
 									<c:when test="${loginUser.getAssignTypeId() == 2}">
@@ -128,19 +143,17 @@ function isDeleteCommentCheck() {
 				<br>
 				<c:if test="${message.message_id == commentMessageId}">
 					<c:if test="${ not empty errorMessages }">
-						<div id="errorMessages">
-							<ul>
-								<c:forEach items="${errorMessages}" var="messages">
-									<li><c:out value="${messages}" />
-								</c:forEach>
-							</ul>
-						</div>
+						<ul>
+							<c:forEach items="${errorMessages}" var="messages">
+								<h6><c:out value="${messages}" /></h6>
+							</c:forEach>
+						</ul>
 						<c:remove var="errorMessages" scope="session"/>
 					</c:if>
 				</c:if>
 				<div id="comments-area">
 					<form action="newComment" method="post">
-						<textarea name="commentBody" cols="50" rows="5" class="comment-box"><c:out value="${nowComment}" /></textarea>
+						<textarea name="commentBody" cols="50" rows="5" wrap="hard"><c:out value="${nowComment}" /></textarea>
 						<br />
 						<input type ="hidden" name="messages_id" value="${message.message_id}"/>
 						<div id="comment">
@@ -154,8 +167,8 @@ function isDeleteCommentCheck() {
 			</c:forEach>
 		</div>
 		<div id="sub">
-			<h2>メニュー</h2>
-			<div id="menu">
+			<div class="section">
+				<h3>メニュー</h3>
 				<ul>
 					<li>
 						<a href="newMessage" >新規投稿</a>

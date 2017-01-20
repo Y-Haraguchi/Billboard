@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@CHARSET "UTF-8";
 
 body {
    margin:0;
@@ -13,12 +13,118 @@ body {
    background:#fff url("../images/bg.gif") 50% 50% repeat-y fixed;
 }
 p,form,input{margin: 0}
+
+a {
+   color:#333;
+   text-decoration:none;
+}
+
+a:hover {
+   color:#ddd;
+   text-decoration:none;
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+   margin:0;
+}
+
+
+#top {
+   width:780px;
+   margin:0 auto;
+   text-align:center;
+}
+
+#errorMessage {
+   margin:0 auto;
+   text-align:center;
+}
+
 #form{
-    width: 400px;
-    margin: 30px auto;
+    width: 730px;
+    margin: 0px auto;
     padding: 20px;
     border: 1px solid #555;
-    }
+}
+
+#menu {
+   float:right;
+}
+#header {
+   width:780px;
+   height:60px;
+   margin-bottom:10px;
+   background:#fff url("../images/bg_head.gif") 0% 0% no-repeat;
+   border-bottom:1px solid #666;
+}
+#contents {
+   clear:both;
+   width:760px;
+   margin:0 10px;
+}
+
+#main {
+   float:left;
+   width:560px;
+}
+/* ========TOP CUSTOMIZE======== */
+#top a {
+   margin:0 0 1em 0;
+   color:#0000FF;
+}
+#top h5 {
+   font-size: 18px;
+   color: #FF0000;
+}
+
+/* ========HEADER CUSTOMIZE======== */
+#header h1 {
+   margin:0;
+   padding:0 10px;
+   font-size:36px;
+   line-height:60px;
+}
+
+/* ========MENU CUSTOMIZE======== */
+#menu ul {
+   margin:0;
+   padding:0;
+}
+
+#menu li {
+   float:left;
+   color:#333;
+   text-align:center;
+   list-style-type:none;
+   border-left:399px solid #fff;
+}
+
+#menu li a {
+   display:block;
+   width:155px;
+   color:#fff;
+   line-height:40px;
+   text-decoration:none;
+   background:#0089a1;
+}
+
+#menu li:first-child {
+   border-left:none;
+}
+
+#menu li a.active {
+   color:#fff;
+   text-decoration:none;
+   background:#0F98AD;
+}
+
+#menu li a:hover {
+   color:#fff;
+   text-decoration:none;
+   background:#0F98AD;
+}
+
 
 form p{
     font-size: 14px;

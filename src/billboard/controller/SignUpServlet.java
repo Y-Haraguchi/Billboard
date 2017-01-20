@@ -88,6 +88,12 @@ public class SignUpServlet extends HttpServlet {
 		if(signedUser != null) {
 			messages.add("ログインIDが重複しています");
 		}
+		if(name.isEmpty()) {
+			messages.add("ユーザーネームを入力してください");
+		} else if(10 < name.length()) {
+			messages.add("１０文字以下で入力してください");
+		}
+
 		if(password.isEmpty()) {
 			messages.add("パスワードを入力してください");
 		} else if(6 > password.length() || password.length() > 255) {
@@ -96,14 +102,10 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("半角文字で入力してください");
 		}
 
-		if(!password.equals(checkPassword)) {
+		if(checkPassword.isEmpty()) {
+			messages.add("確認用のパスワードを入力してください");
+		} else if(!password.equals(checkPassword)) {
 			messages.add("確認用のパスワードが違います");
-		}
-
-		if(name.isEmpty()) {
-			messages.add("名前を入力してください");
-		} else if(10 < name.length()) {
-			messages.add("１０文字以下で入力してください");
 		}
 
 		if(messages.size() == 0) {

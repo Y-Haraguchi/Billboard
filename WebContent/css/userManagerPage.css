@@ -45,7 +45,10 @@ h1,h2,h3,h4,h5,h6 {
    background:#fff url("../images/bg_head.gif") 0% 0% no-repeat;
    border-bottom:1px solid #666;
 }
-
+#errorMessage {
+   margin:0 auto;
+   text-align:center;
+}
 #menu {
    float:left;
 }
@@ -88,11 +91,17 @@ h1,h2,h3,h4,h5,h6 {
    color:#0000FF;
 }
 
+#top h5 {
+   font-size: 18px;
+   color: #FF0000;
+}
+
+
 /* ========HEADER CUSTOMIZE======== */
 #header h1 {
    margin:0;
    padding:0 10px;
-   font-size:48px;
+   font-size:36px;
    line-height:60px;
 }
 
@@ -107,7 +116,7 @@ h1,h2,h3,h4,h5,h6 {
    color:#333;
    text-align:center;
    list-style-type:none;
-   border-left:399px solid #fff;
+   border-left:470px solid #fff;
 }
 
 #menu li a {
@@ -214,38 +223,10 @@ h1,h2,h3,h4,h5,h6 {
    background:#666;
 }
 
-
-/* ========MENU CUSTOMIZE======== */
-#menu ul {
-   margin:0;
-   padding:0;
-}
-
-#menu li {
-   margin:0;
-   padding:0;
-   list-style-type:none;
-   border-bottom:1px solid #999;
-}
-
-#menu li a {
-   display:block;
-   width:175px;
-   padding-left:5px;
-   color:#333;
-   line-height:2.5;
-   background:#ddd;
-}
-
-#menu li a:hover {
-   color:#333;
-   background:#d4d4d4;
-}
-
 /* ========TABLE CUSTOMIZE======== */
 table.type08 {
 	border-collapse: collapse;
-	text-align: left;
+	text-align: center;
 	line-height: 1.5;
 	border-left: 1px solid #ccc;
 	font-weight: bold;
