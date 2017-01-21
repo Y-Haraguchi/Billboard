@@ -16,7 +16,7 @@
 	</div>
 	<div id="menu">
 		<ul>
-			<li><a href="usersManager">ユーザー管理画面へ</a></li>
+			<li><a href="usersManager">←ユーザー管理画面</a></li>
 		</ul>
 	</div>
 	<c:if test="${ not empty errorMessages }">

@@ -18,7 +18,7 @@
 	<div id="menu">
 		<ul>
 			<li>
-				<a href="home" >ホーム</a>
+				<a href="home" >←ホーム</a>
 			</li>
 		</ul>
 	</div>
@@ -50,7 +50,7 @@
 				<h3></h3>
 				<br />
 				本文
-				<textarea name="messageBody" cols="95" rows="25" wrap="hard"><c:out value="${nowMessageBody}" /></textarea>
+				<textarea name="messageBody" cols="95" rows="25" ><c:out value="${nowMessageBody}" /></textarea>
 				<br>
 				<br>
 				<input type="submit" value="投稿">(1000文字まで)

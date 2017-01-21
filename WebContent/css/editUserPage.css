@@ -44,7 +44,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #menu {
-   float:right;
+   float:left;
 }
 #header {
    width:780px;
@@ -55,8 +55,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 #contents {
    clear:both;
-   width:760px;
-   margin:0 10px;
+   width:780px;
+   margin:0 0px;
 }
 
 #main {
@@ -92,7 +92,7 @@ h1,h2,h3,h4,h5,h6 {
    color:#333;
    text-align:center;
    list-style-type:none;
-   border-left:399px solid #fff;
+   border-left:470px solid #fff;
 }
 
 #menu li a {

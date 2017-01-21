@@ -38,10 +38,10 @@ function isComebackCheck() {
 	<div id="menu">
 		<ul>
 			<li>
-				<a href="home" >ホーム</a>
+				<a href="home" >←ホーム</a>
 			</li>
 			<li>
-				<a href="signup" >ユーザー新規登録</a>
+				<a href="signup" >ユーザー新規登録→</a>
 			</li>
 		</ul>
 	</div>
@@ -91,8 +91,8 @@ function isComebackCheck() {
 				<c:choose>
 					<c:when test="${loginUsers.getId() == enteredUser.getId() && enteredUser.getAssignTypeId() == 1}"></c:when>
 					<c:otherwise>
-						<c:if test="${enteredUser.isBan == 1}"><label for="isNotBan">有効</label></c:if>
-						<c:if test="${enteredUser.isBan == 0}"><label for="isBan">無効</label></c:if>
+						<c:if test="${enteredUser.isBan == 1}"><font color="#32CD32">有効</font></c:if>
+						<c:if test="${enteredUser.isBan == 0}"><font color="#ff0000">無効</font></c:if>
 						<c:if test="${enteredUser.isBan == 1}">
 							<form action="usersManager" method="post" onSubmit="return isStopCheck()">
 									<input type="hidden" name="user_id" value="${enteredUser.id}">

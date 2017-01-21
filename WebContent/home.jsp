@@ -39,21 +39,25 @@ function isDeleteCommentCheck() {
 	</div>
 	<div id="contents">
 		<div id="main">
-			<h2>絞り込み</h2>
-			<form action="home" method="get">
-				カテゴリー：<input type="text" name="category" value="${nowCategory}"><br><br>
-				日付：　　<input type="date" name="startDate" value="${nowStartDate}">  ～  <input type="date" name="endDate" value="${nowEndDate}">
-				<input type="submit" value="検索">
-			</form>
-			<div id="searchReset">
+			<h2></h2>
+			<div class="sample-box-13">
 				<form action="home" method="get">
-					<input type="hidden" name="category" value="">
-					<input type="hidden" name="startDate" value="">
-					<input type="hidden" name="endDate" value="">
-					<input type="submit" value="リセット">
+					カテゴリー
+					<p class="mail"><input type="text" name="category" value="${nowCategory}"></p>
+					日付
+					<p class="mail"><input type="date" name="startDate" value="${nowStartDate}">  ～
+					<input type="date" name="endDate" value="${nowEndDate}"></p>
+					<input type="submit" value="検索">
 				</form>
+				<div id="searchReset">
+					<form action="home" method="get">
+						<input type="hidden" name="category" value="">
+						<input type="hidden" name="startDate" value="">
+						<input type="hidden" name="endDate" value="">
+						<p class="mail"><input type="submit" value="リセット"></p>
+					</form>
+				</div>
 			</div>
-			<br>
 			<c:if test="${ not empty accessErrorMessages }">
 				<ul>
 					<c:forEach items="${accessErrorMessages}" var="accessMessages">
@@ -163,12 +167,11 @@ function isDeleteCommentCheck() {
 					</form>
 				</div>
 				<br />
-				<h2></h2>
 			</c:forEach>
 		</div>
 		<div id="sub">
 			<div class="section">
-				<h3>メニュー</h3>
+				<h2>メニュー</h2>
 				<ul>
 					<li>
 						<a href="newMessage" >新規投稿</a>

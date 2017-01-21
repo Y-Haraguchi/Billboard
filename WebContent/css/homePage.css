@@ -62,19 +62,19 @@ form,p,input {
 
 #contents {
    clear:both;
-   width:760px;
-   margin:0 10px;
+   width:780px;
+   margin:0 0px;
 }
 
 #main {
    float:left;
-   width:560px;
+   width:580px;
 }
 
 #searchReset {
    float:right;
    margin-top:-23px;
-   margin-right:65px;
+   margin-right:0px;
 }
 
 #sub {
@@ -108,7 +108,7 @@ form,p,input {
 
 /* ========TOP CUSTOMIZE======== */
 #top a {
-   margin:0 0 1em 0;
+/*    margin:0 0 1em 0; */
    color:#0000FF;
 }
 
@@ -116,7 +116,7 @@ form,p,input {
 #header h1 {
    margin:0;
    padding:0 10px;
-   font-size:48px;
+   font-size:42px;
    line-height:60px;
 }
 
@@ -213,15 +213,43 @@ form,p,input {
 
 
 /* ========SUB CONTENTS CUSTOMIZE======== */
-#sub h2 {
-   margin:0;
-   padding:5px;
-   color:#fff;
-   font-weight:bold;
-   font-size:15px;
-   background:#666;
+#sub .section {
+   margin-bottom:10px;
 }
 
+#sub h2 {
+   padding:5px;
+   font-size:13px;
+   font-weight:bold;
+   color:#fff;
+   text-align:center;
+   background:#0F98AD;
+}
+
+#sub ul {
+   margin:0;
+   padding:0;
+   border:1px solid #aaa;
+   border-top:none;
+   background:#fff;
+}
+
+#sub li {
+/*    width:198px; */
+   list-style:none;
+   border-top:1px solid #aaa;
+   background:#efefef;
+}
+
+#sub li a {
+   /* /zoom:1;for IE6 */
+   display:block;
+   padding:10px 5px;
+}
+
+#sub li a:hover {
+   border-left:5px solid #0089a1;
+}
 
 /* ========MENU CUSTOMIZE======== */
 #menu ul {
@@ -256,40 +284,20 @@ form,p,input {
    padding:10px 10px 0 0;
    text-align:right;
 }
-
-#footerMenu {
-   padding:10px 0;
+.sample-box-13 {
+    border: 2px solid #da4033;
+    border-radius: 4px;
+    margin: 2em 0;
+    padding: 2em;
+    position: relative;
 }
-
-#footerMenu a {
-   color:#333;
-}
-
-#footerMenu a:hover {
-   color:#333;
-   border:0;
-   border-bottom:1px solid #333;
-}
-
-#footerMenu ul {
-   margin:0;
-   padding:0;
-   list-style:none;
-}
-
-#footerMenu li {
-   display:inline;
-   margin:0 0 0 10px;
-   padding-left:8px;
-   background:url("../images/arrow.gif") 0 4px no-repeat;
-}
-
-.copyright {
-   padding:20px 0;
-   color:#333;
-   text-align:center;
-   font-style:normal;
-   font-size:11px;
-   border-top:2px solid #ddd;
-   background:#f1f1f1;
+.sample-box-13::before {
+    background-color: #fff;
+    color: #da4033;
+    content: "絞り込み";
+    font-weight: bold;
+    left: 1em;
+    padding: 0 .5em;
+    position: absolute;
+    top: -1em;
 }
