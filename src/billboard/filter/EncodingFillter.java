@@ -32,7 +32,10 @@ public class EncodingFillter implements Filter {
 		chain.doFilter(request, response); // サーブレットを実行
 
 		System.out.println("EncodingFilter# chain.doFilterが実行されました。");
+
 	}
+
+
 
 	@Override
 	public void init(FilterConfig config) {

@@ -107,18 +107,18 @@ public class EditUserServlet extends HttpServlet {
 		int userId = Integer.parseInt(request.getParameter("user_id"));
 		String loginId = request.getParameter("login_id");
 		String password = request.getParameter("password");
-		String checkPassword = request.getParameter("checkpassword");
+		String checkPassword = request.getParameter("checkPassword");
 		String name = request.getParameter("name");
 
 		//すでにDBに登録されているlogin_idを検索
 		User signedUser = new UserService().getUsersLoginId(loginId);
-
+		System.out.println(password);
+		System.out.println(checkPassword);
 		if(signedUser != null) {
 			if(signedUser.getId() != userId) {	//取ってきたデータが自分だったら編集OK
 				messages.add("他ユーザーのログインIDと重複しています");
 			}
 		}
-
 		if(loginId.isEmpty()) {
 			messages.add("ログインIDを入力してください");
 		}else if(!loginId.matches("^\\w{6,20}$")) {
@@ -132,10 +132,9 @@ public class EditUserServlet extends HttpServlet {
 				messages.add("半角文字で入力してください");
 			}
 		}
-
-		if(!StringUtils.isEmpty(checkPassword)) {
+		if(!StringUtils.isEmpty(password)) {
 			if(!password.equals(checkPassword)) {
-				messages.add("確認用のパスワードが違います");
+				messages.add("確認用のパスワードの未入力又は、間違っています");
 			}
 		}
 
