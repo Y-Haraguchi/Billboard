@@ -157,7 +157,7 @@ function isDeleteCommentCheck() {
 				</c:if>
 				<div id="comments-area">
 					<form action="newComment" method="post">
-						<textarea name="commentBody" cols="50" rows="5" wrap="hard"><c:out value="${nowComment}" /></textarea>
+						<textarea name="commentBody" cols="50" rows="5"><c:out value="${nowComment}" /></textarea>
 						<br />
 						<input type ="hidden" name="messages_id" value="${message.message_id}"/>
 						<div id="comment">

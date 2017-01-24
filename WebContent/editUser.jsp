@@ -79,6 +79,7 @@
 					</c:otherwise>
 				</c:choose>
 				<br />
+				<input type="hidden"  name="user_id" value="${editUser.getId()}" />
 				<p class="submit"><input type="submit" value="変更" /></p>
 			</form>
 		</div>

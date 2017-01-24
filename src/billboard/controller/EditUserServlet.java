@@ -104,10 +104,20 @@ public class EditUserServlet extends HttpServlet {
 
 	private boolean isValid(HttpServletRequest request,
 			List<String> messages) {
+		int userId = Integer.parseInt(request.getParameter("user_id"));
 		String loginId = request.getParameter("login_id");
 		String password = request.getParameter("password");
 		String checkPassword = request.getParameter("checkpassword");
 		String name = request.getParameter("name");
+
+		//すでにDBに登録されているlogin_idを検索
+		User signedUser = new UserService().getUsersLoginId(loginId);
+
+		if(signedUser != null) {
+			if(signedUser.getId() != userId) {	//取ってきたデータが自分だったら編集OK
+				messages.add("他ユーザーのログインIDと重複しています");
+			}
+		}
 
 		if(loginId.isEmpty()) {
 			messages.add("ログインIDを入力してください");

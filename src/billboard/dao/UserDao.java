@@ -82,7 +82,6 @@ public class UserDao {
 			sql.append(" update_date = ?");
 
 			ps = connection.prepareStatement(sql.toString());
-			System.out.println(ps);
 
 			ps.setString(1, editUser.getLoginId());
 			ps.setString(2, editUser.getName());
@@ -126,7 +125,6 @@ public class UserDao {
 			sql.append(" update_date = ?");
 
 			ps = connection.prepareStatement(sql.toString());
-			System.out.println(ps);
 
 			ps.setString(1, editUser.getLoginId());
 			ps.setString(2, editUser.getName());
