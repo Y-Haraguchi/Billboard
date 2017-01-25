@@ -197,7 +197,7 @@ form,p,input {
     box-shadow: 0 2px 3px 0 #ddd;
     -moz-box-shadow: 0 2px 3px 0 #ddd;
     -webkit-box-shadow: 0 2px 3px 0 #ddd;
-    word-break: break-all;
+    word-wrap:break-word;
 }
 
 
@@ -208,7 +208,7 @@ form,p,input {
     box-shadow: 0 2px 3px 0 #ddd;
     -moz-box-shadow: 0 2px 3px 0 #ddd;
     -webkit-box-shadow: 0 2px 3px 0 #ddd;
-    word-break: break-all;
+    word-wrap:break-word;
 }
 
 
