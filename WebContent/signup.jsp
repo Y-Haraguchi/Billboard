@@ -31,6 +31,8 @@
 			<li><a href="usersManager">←ユーザー管理</a></li>
 		</ul>
 	</div>
+	<br/>
+	<br/>
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>

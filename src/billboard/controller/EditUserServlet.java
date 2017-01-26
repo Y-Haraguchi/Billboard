@@ -122,26 +122,26 @@ public class EditUserServlet extends HttpServlet {
 		if(loginId.isEmpty()) {
 			messages.add("ログインIDを入力してください");
 		}else if(!loginId.matches("^\\w{6,20}$")) {
-			messages.add("半角英数字で入力してください");
+			messages.add("ログインIDは半角英数字で入力してください");
 		}
 
 		if(!StringUtils.isEmpty(password)) {
 			if(6 > password.length() || password.length() > 255) {
-				messages.add("６文字以上２５５文字以下で入力してください");
+				messages.add("登録用パスワードは６文字以上２５５文字以下で入力してください");
 			} else if(password.matches("[ -~]")) {
 				messages.add("半角文字で入力してください");
 			}
 		}
 		if(!StringUtils.isEmpty(password)) {
 			if(!password.equals(checkPassword)) {
-				messages.add("確認用のパスワードの未入力又は、間違っています");
+				messages.add("確認用パスワードの未入力又は、間違っています");
 			}
 		}
 
 		if(name.isEmpty()) {
 			messages.add("ユーザーネームを入力してください");
 		} else if(10 < name.length()) {
-			messages.add("１０文字以下で入力してください");
+			messages.add("ユーザーネームは１０文字以下で入力してください");
 		}
 
 		if(messages.size() == 0) {

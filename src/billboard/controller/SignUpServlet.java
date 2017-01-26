@@ -78,9 +78,9 @@ public class SignUpServlet extends HttpServlet {
 		if(loginId.isEmpty()) {
 			messages.add("ログインIDを入力してください");
 		} else if(6 > loginId.length() || loginId.length() > 20) {
-			messages.add("６文字以上２０字以下で入力してください");
+			messages.add("登録用パスワードは６文字以上２０字以下で入力してください");
 		}else if(loginId.matches("\\w")) {
-			messages.add("半角英数字で入力してください");
+			messages.add("登録用パスワードは半角英数字で入力してください");
 		}
 
 		//重複チェックの為にDBにアクセス
@@ -91,21 +91,21 @@ public class SignUpServlet extends HttpServlet {
 		if(name.isEmpty()) {
 			messages.add("ユーザーネームを入力してください");
 		} else if(10 < name.length()) {
-			messages.add("１０文字以下で入力してください");
+			messages.add("ユーザーネームは１０文字以下で入力してください");
 		}
 
 		if(password.isEmpty()) {
-			messages.add("パスワードを入力してください");
+			messages.add("登録用パスワードを入力してください");
 		} else if(6 > password.length() || password.length() > 255) {
-			messages.add("６文字以上２５５文字以下で入力してください");
+			messages.add("登録用パスワードは６文字以上２５５文字以下で入力してください");
 		} else if(password.matches("[ -~]")) {
-			messages.add("半角文字で入力してください");
+			messages.add("登録用パスワードは半角文字で入力してください");
 		}
 
 		if(checkPassword.isEmpty()) {
-			messages.add("確認用のパスワードを入力してください");
+			messages.add("確認用パスワードを入力してください");
 		} else if(!password.equals(checkPassword)) {
-			messages.add("確認用のパスワードが違います");
+			messages.add("確認用パスワードが違います");
 		}
 
 		if(messages.size() == 0) {
