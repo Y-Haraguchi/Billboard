@@ -17,7 +17,7 @@ public class AssignTypeDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM billboard.assign_types ";
+			String sql = "SELECT * FROM assign_types ";
 
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

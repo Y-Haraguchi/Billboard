@@ -18,7 +18,7 @@ public class CommentDao {
 		try {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO billboard.comments (");
+			sql.append("INSERT INTO comments (");
 			sql.append("messages_id");
 			sql.append(", body");
 			sql.append(", insert_date");
@@ -54,7 +54,7 @@ public class CommentDao {
 		try {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE FROM billboard.comments WHERE id = ?");
+			sql.append("DELETE FROM comments WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
 

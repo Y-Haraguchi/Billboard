@@ -24,7 +24,7 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO billboard.users ( ");
+			sql.append("INSERT INTO users ( ");
 			sql.append("login_id");
 			sql.append(", password");
 			sql.append(", name");
@@ -66,7 +66,7 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE billboard.users SET ");
+			sql.append("UPDATE users SET ");
 			sql.append("login_id = ?");
 			sql.append(", name = ?");
 			sql.append(", branch_id = ?");
@@ -112,7 +112,7 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE billboard.users SET ");
+			sql.append("UPDATE users SET ");
 			sql.append("login_id = ?");
 			sql.append(", name = ?");
 			sql.append(", update_date = CURRENT_TIMESTAMP ");
@@ -153,7 +153,7 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE billboard.users SET is_ban = ");
+			sql.append("UPDATE users SET is_ban = ");
 			sql.append("CASE");
 			sql.append(" WHEN is_ban = 1 THEN 0 ELSE 1 ");
 			sql.append("END ");
@@ -186,7 +186,7 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			//すでに登録されているusersのログインIDとパスワードを参照するsql文
-			String sql = "SELECT * FROM billboard.users WHERE login_id = ? AND password = ?";
+			String sql = "SELECT * FROM users WHERE login_id = ? AND password = ?";
 
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, login_id);
@@ -219,7 +219,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM billboard.users WHERE id = ?";
+			String sql = "SELECT * FROM users WHERE id = ?";
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1, id);
 
@@ -242,7 +242,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM billboard.users WHERE login_id = ?";
+			String sql = "SELECT * FROM users WHERE login_id = ?";
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, loginId);
 
@@ -292,7 +292,7 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 
-			sql.append("SELECT * FROM billboard.users ");
+			sql.append("SELECT * FROM users ");
 
 			sql.append(" ORDER BY insert_date ASC limit " + num);
 			ps = connection.prepareStatement(sql.toString());

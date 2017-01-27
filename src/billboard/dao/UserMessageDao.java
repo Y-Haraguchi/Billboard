@@ -18,7 +18,7 @@ public class UserMessageDao {
 	public Timestamp getMinDate(Connection connection) {
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT MIN(insert_date) AS start_date FROM billboard.users_messages";
+			String sql = "SELECT MIN(insert_date) AS start_date FROM users_messages";
 
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -37,7 +37,7 @@ public class UserMessageDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("SELECT * FROM billboard.users_messages ");
+			sql.append("SELECT * FROM users_messages ");
 			sql.append("WHERE category LIKE ? ");
 			sql.append(" AND insert_date BETWEEN ? AND ?");
 			sql.append("ORDER BY insert_date DESC limit " + num);

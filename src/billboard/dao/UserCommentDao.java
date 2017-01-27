@@ -20,7 +20,7 @@ public class UserCommentDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 
-			sql.append("SELECT * FROM billboard.users_comments");
+			sql.append("SELECT * FROM users_comments");
 
 			ps = connection.prepareStatement(sql.toString());
 			ResultSet rs = ps.executeQuery();

@@ -18,7 +18,7 @@ public class BranchDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM billboard.branches ";
+			String sql = "SELECT * FROM branches ";
 
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

@@ -18,7 +18,7 @@ public class MessageDao {
 		try {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO billboard.messages ( ");
+			sql.append("INSERT INTO messages ( ");
 			sql.append("category");
 			sql.append(", title");
 			sql.append(", body");
@@ -56,7 +56,7 @@ public class MessageDao {
 		try {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE FROM billboard.messages WHERE id = ?");
+			sql.append("DELETE FROM messages WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
 
